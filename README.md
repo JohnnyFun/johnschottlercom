@@ -12,3 +12,4 @@
 # TODO
 
 - host somewhere with ssl, so you can host do VR games and WebRTC without issue
+- host needs to be able to send index.html regardless of request path...
