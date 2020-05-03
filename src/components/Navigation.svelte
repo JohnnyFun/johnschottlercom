@@ -1,5 +1,7 @@
 <nav>
-  <a class="home" href="/">John&nbsp;Schottler</a>
+  <div>
+    <a class="home" href="/">John&nbsp;Schottler</a>
+  </div>
   <div class="menu-items">
     <a href="https://github.com/JohnnyFun" title="github" target="_blank">
       <Icon type="github" />
@@ -23,37 +25,52 @@
 <style>
   nav {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
+    padding:0;
+    margin:0;
     width: 100vw;
-    padding: 1rem;
-    padding-left: 2rem;
     background-color: var(--primary);
-    box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0,0,0)
-  }
-
-  .home {
-    font-size: 2rem;
+    box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0,0,0);
   }
 
   a {
     color: var(--primary-text);
     text-decoration: none;
-    transition: color 0.3s;
-    margin-right: 2rem;
+    display: inline-block;
+    margin: .5rem;
   }
 
-  nav a:hover {
-    color: #eee;
+  a.home {
+    padding: 1rem;
+    font-size: 2rem;
+    transition: transform 0.5s;
   }
 
-  @media only screen and (max-width: 33rem) {
+  a.home:hover {
+    transform: scale(1.1, 1.1);
+  }
+
+  .menu-items {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+
+  .menu-items > a {
+    padding: 1rem;
+    transition: border-bottom 0.3s;
+    border: 2px solid transparent;
+  }
+
+  .menu-items > a:hover {
+    border-bottom: 2px solid var(--primary-text);
+  }
+
+  @media only screen and (max-width: 350px) {
     nav {
       display: block;
-    }
-    
-    .menu-items {
-      margin-top: 1rem;
+      text-align: center;
     }
   }
 </style>

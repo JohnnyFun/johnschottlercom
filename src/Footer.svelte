@@ -17,7 +17,7 @@
     position: fixed;
     width: 100%;
     padding: 1rem;
-    box-shadow: .5rem .1rem .8rem 1rem #888888;
+    box-shadow: .5rem 1rem .8rem 1rem #888888;
     bottom: 0;
     right: 0;
     margin-top: 2rem;
