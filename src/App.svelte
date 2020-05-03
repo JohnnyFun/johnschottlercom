@@ -42,7 +42,6 @@
   }
 
   main {
-    text-align: center;
     overflow-y:auto;
     overflow-x:auto;
   }
@@ -51,7 +50,7 @@
 <script>
 	import Routes from 'components/Routes'
 	import Navigation from 'components/Navigation'
-  import { Router, links } from "svelte-routing"
+  import { Router, links } from 'svelte-routing'
 </script>
 
 <div use:links>
