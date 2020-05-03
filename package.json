@@ -1,0 +1,33 @@
+{
+  "name": "johnschottlercom",
+  "version": "1.0.0",
+  "description": "personal website",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnnyFun/johnschottlercom.git"
+  },
+  "author": "John Schottler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohnnyFun/johnschottlercom/issues"
+  },
+  "homepage": "https://github.com/JohnnyFun/johnschottlercom#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^7.0.2",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "svelte": "^3.21.0",
+    "svelte-loader": "^2.13.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "write-file-webpack-plugin": "^4.5.1"
+  },
+  "dependencies": {}
+}

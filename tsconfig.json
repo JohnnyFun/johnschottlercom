@@ -1,0 +1,22 @@
+/*
+https://code.visualstudio.com/docs/languages/
+https://www.typescriptlang.org/docs/handbook/compiler-options.html (jsconfig.json is basically a tsconfig.json with allowJs:true)
+https://code.visualstudio.com/docs/languages/jsconfig
+*/
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"baseUrl": ".",
+		"target": "esnext",
+		"moduleResolution": "node",
+		"traceResolution": true,
+		"paths": {
+			"*": [
+				"./src/*"
+			]
+		}
+	},
+	"include": [
+		"./src"
+	]
+}

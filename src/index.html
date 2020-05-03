@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <title>John Schottler</title>
+  <!--
+    just use good ol bootstrap for now, but later on 
+    style the bootstrap classes maybe. but no biggy to just keep using bootstrap too
+    could also just import the sass that you're using instead of the entire thing, but not a big deal even on a raspberry pi probably
+  -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!--
+    using font awesome for icons for now--again, consider pulling only what's needed from somewhere if it's slow on light hardware
+    https://fontawesome.com/icons?d=gallery&m=free
+  -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+  <style>
+    /* a few global styles...consider extracting to separate file and later include in a sass build, but not a big deal */
+    html {
+      font-size: 10px; /*so that 1rem === 10px*/
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 2rem;
+      font-size: 1.5rem;
+      background-color: #eee;
+      color: #666;
+    }
+
+    /*TODO: use bs4's sass files instead--import only what you use, set their font-size sass var...*/
+    .btn, .form-control, .input-group-text {
+      font-size: 1.5rem;
+    }
+    .close {
+      font-size: 2rem;
+    }
+    
+    /*scrollbar styling*/
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 5px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #c9c9c9;
+      border-radius: 5px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: darken(#c9c9c9, 10%);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
