@@ -3,6 +3,11 @@
     box-sizing: border-box; /*so padding doesn't affect width/height*/
   }
 
+  :global(:root) {
+    --primary: #c36e07;
+    --primary-text: #eee;
+  }
+
   :global(html) {
     font-size: 10px; /*so that 1rem === 10px*/
   }
@@ -40,14 +45,10 @@
   :global(::-webkit-scrollbar-thumb:hover) {
     background: darken(#c9c9c9, 10%);
   }
-
-  main {
-    overflow-y:auto;
-    overflow-x:auto;
-  }
 </style>
 
 <script>
+	import Footer from 'Footer'
 	import Routes from 'components/Routes'
 	import Navigation from 'components/Navigation'
   import { Router, links } from 'svelte-routing'
@@ -56,8 +57,7 @@
 <div use:links>
   <Router>
     <Navigation />
-    <main>
-      <Routes />
-    </main>
+    <Routes />
+    <Footer />
   </Router>
 </div>
