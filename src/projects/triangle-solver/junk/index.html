@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<title>Triangle Time!</title>
+<style type="text/css">
+    h2 {
+        font-family: verdana;
+        text-align: center;
+    }
+    p {
+        font-family: verdana;
+    }
+    form input {
+        margin-right: 10px;
+        margin-bottom: 4px;
+    }
+    .alert {
+        color: red; /*TODO: Take this out when bootstrap style in*/
+    }
+    #svg {
+        width: 600px;
+        height: 400px;
+        /*background-color: #eee;*/
+    }
+    line {
+        stroke-width: 1;
+        fill: none;
+    }
+</style>
+</head>
+<body>
+<h2>Welcome to the triangle zone, where the party never ends!</h2>
+<p>
+    At least one side value and 2 other values are needed to solve any triangle. Angle values are in degrees.<br/>
+</p>
+
+<div id="message" class="alert"></div>
+
+<form id="triangleForm">
+    <div class="sides">
+        <input type="text" id="side1" autofocus/>Side one<br/>
+        <input type="text" id="side2"/>Side two<br/>
+        <input type="text" id="side3"/>Side three
+    </div>
+    <div class="angles">
+        <input type="text" id="angle1"/>Angle one<br/>
+        <input type="text" id="angle2"/>Angle two<br/>
+        <input type="text" id="angle3"/>Angle three
+    </div>
+    <br/>
+    <input type="submit" value="Solve that shit"/>
+    <input type="reset" value="Clear All"/>
+</form>
+
+<svg id="svg">No SVG for you!</svg>
+
+    
+<div style="position: absolute; right: 0; bottom: 0;">
+    <a href="trianglesolver2.0.html">Issue with beta? Try the old triangle solver</a>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="helpers.js"></script>
+<script src="trianglesolver.js"></script>
+<script src="tests.js"></script>
+</html>

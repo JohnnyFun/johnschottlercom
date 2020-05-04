@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Johnny Grapher</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
+    <style type="text/css">
+        html, body {margin:0;padding:0;height:100%;}
+        polyline {
+            stroke: black;
+            stroke-width: 2;
+            fill: none;
+        }
+        svg {
+            float:left;
+            background-color: #eee;
+            height:100%;
+            width: 100%;
+        }
+        .hoverBox {
+            position:absolute;
+            padding-top: 10px;
+            padding-left:10px;
+            background: #eee;
+        }
+        #graphedLines {
+            margin-top:10px;
+            border:1px solid black;
+            padding:5px;
+            border-radius:5px;
+            display:none;
+        }
+        #graphedLines > div{
+            margin:4px;
+        }
+        #resetButton{
+            position:absolute;
+            right:10px;
+            bottom:10px;
+        }
+        #formula{
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hoverBox">
+        <form>
+            y = <input id="formula" type="text" placeholder="Formula" autofocus />
+        </form>
+        <div id="graphedLines"></div>
+    </div>
+    
+    <svg id="svg">
+        It appears your browser is stupid.
+    </svg>
+
+    <button id="resetButton">Reset</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="/projects/helpers.js"></script>
+    <script src="grapher.js"></script>
+</body>
+</html>

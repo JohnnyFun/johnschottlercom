@@ -1,0 +1,75 @@
+function solve_old(triangle) {
+    _setTriangleMeta(triangle);
+    _validateTriangle(triangle);
+    _convertAngles(triangle, _toRadians);
+    if (triangle.solvedSides.length === 3) {
+        _SSS(triangle);
+    } else if (triangle.solvedAngles.length > 1 && triangle.solvedSides.length > 0) {
+        _AAS(triangle);
+    } else if (triangle.solvedSides.length > 1 && triangle.solvedAngles.length > 0) {
+        var includedAnlge = _solved(triangle, 's1,a3,s2') ||
+                            _solved(triangle, 's2,a1,s3') ||
+                            _solved(triangle, 's3,a2,s1');
+        includedAnlge ? _SAS(triangle) : _SSA(triangle);
+    }
+    _setTriangleMeta(triangle);
+    if (triangle.solvedProps.length !== 6) {
+        throw new Error('unable to solve the triangle with the given input.');
+    }
+    _convertAngles(triangle, _toDegrees);
+    return triangle;
+}
+
+/**
+ * Simply solves the 3 angles using Law of Cosines
+ * @param {object} triangle  
+ */
+function _SSS(triangle) {
+    console.log('solving SSS');
+    triangle.unsolvedAngles.forEach(function(angle) {
+         _solveAngleLawOfCosines(triangle, angle);
+    });
+}
+
+/**
+ * Solve the missing angle with simple diff. Then solve the two sides with Law of Sines.
+ * @param {object} triangle 
+ */
+function _AAS(triangle) {
+    console.log('solving AAS');
+    triangle.unsolvedAngles.forEach(function(angle) {
+        triangle[angle] = Math.PI - triangle[triangle.solvedAngles[0]] - triangle[triangle.solvedAngles[1]]; //todo: extract to solve last angle func, but need to reset triangle props after so solvedAngles is populated. Note that Math.PI is 180 degrees in radians
+    });
+    triangle.unsolvedSides.forEach(function(side) {
+        _solveSideLawOfSines(triangle, side);
+    });
+}
+
+/**
+ * Solve missing side and then 2 angles using Law of Cosines
+ * @param {object} triangle 
+ */
+function _SAS(triangle) {
+    console.log('solving SAS');
+    triangle.unsolvedSides.forEach(function (side) {
+        _solveSideLawOfCosines(triangle, side);
+    });
+    triangle.unsolvedAngles.forEach(function (angle) {
+        _solveAngleLawOfCosines(triangle, angle);
+    });
+}
+
+/**
+ * Solve missing two angles using Law of Cosines and also check for ambiguous case using deff to check for another possibility for one of the angles.
+ * @param {object} triangle 
+ */
+function _SSA(triangle) {
+    console.log('solving SSA');
+    //ambigous case: when solving the missing 2 angles, check for another possibility and use that possibility in a separate solve call to find the alternate solution by passing in a new triangle and getting the result
+    triangle.unsolvedSides.forEach(function (side) {
+        _solveSideLawOfSines(triangle, side);
+    });
+    triangle.unsolvedAngles.forEach(function (angle) {
+        _solveAngleLawOfSines(triangle, angle);
+    });
+}

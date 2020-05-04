@@ -1,0 +1,272 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SnowFlakes!</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            background-color: #eee;
+        }
+
+        circle, polyline, line {
+            stroke: black;
+            stroke-width: 1;
+            fill: none;
+        }
+
+        h1 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .controlPanel {
+            position: absolute;
+            padding: 5px;
+        }
+
+        input {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controlPanel">
+        <h1>Infinite Perimeter in a Finite Space</h1>
+        <input type="number" min="0" id="depth" placeholder="Depth" autofocus />
+    </div>
+    <svg id="svg">
+        It appears your browser is stupid.
+    </svg>
+    <script src="/projects/helpers.js"></script>
+    <script>
+        //TODO: center entire thing, make it as large as possible, given the screen size
+        var svg = document.getElementById('svg');
+        var depthBox = document.getElementById('depth');
+        var rotateTemplate = 'transform="rotate({0} {1},{2})"';
+        var lineTemplate = '<line x1="{0}" y1="{1}" x2="{2}" y2="{3}" {4} />';
+        var groupTemplate = '<g {0}>{1}</g>';
+        var maxDepth;
+        var maxDepthExplanation = 'Given the amount of screen space you have, this depth will not make your snowflake experience any more exciting than it already is.';
+        var width;
+        var height;
+        var resizeTimeout;
+        var shortDimension;
+        var y;
+        var baseLine;
+        var padding = 0;
+        var depth = 0;
+        var sixtyDegrees = Math.PI / 3;
+        var ratio;
+        var baseLength;
+        depthBox.addEventListener('keyup', onDepthChange);
+        window.addEventListener('resize', onWindowResize);
+        setUp();
+
+        /**
+         * Readies the window for snowflaking!
+         */
+        function setUp() {
+            console.log(svg.clientWidth || svg.parentNode.clientWidth);
+            width = Math.round(svg.clientWidth || svg.parentNode.clientWidth);
+            height = Math.round(svg.clientHeight || svg.parentNode.clientHeight);
+            shortDimension = width < height ? width : height;
+            //"shortDimension" is what will be the distance from top of snowflake to bottom (longest distance), so use that to determine the ratio--pretend 3 for the height of the big triangle and 1/3 of that (1) for the height of the smaller triangle on bottom. Then use trig and multiply by the ratio to determine the side length
+            ratio = shortDimension / 4;
+            baseLength = Math.round((3 / Math.sin(sixtyDegrees)) * ratio);
+
+            //y is global for all lines since we're rotating groups of lines and groups of groups
+            y = height - Math.round((baseLength / 3) / Math.sin(sixtyDegrees)) + 30;
+
+            padding = (shortDimension - baseLength) / 2;
+
+            baseLine = {
+                x1: 0 + padding,
+                x2: Math.round(baseLength - padding)
+            };
+
+            setMaxDepth();
+            if (depth > maxDepth) {
+                depth = maxDepth;
+            }
+            depthBox.value = depth;
+            apply();
+        }
+
+        /**
+         * When the user changes the size of the window, apply the change
+         */
+        function onWindowResize(e) {
+            if (resizeTimeout) {
+                window.clearTimeout(resizeTimeout);
+            }
+            resizeTimeout = window.setTimeout(setUp, 30);
+        }
+
+        /**
+         * Turn each line in this group into new group that retains the rotate
+         * of the line but is broken up into 4 new lines that represent a line
+         * with an equilateral point protruding from it.
+         *
+         * @param group {Group} e.g. { lines: [], groups: [], rotate: { degrees: numba, x: numba (point on which to rotate) } }
+         * @param currentDepth {numba} a number indicating how pretty of a snowflake the user wants
+         * @returns {Group} but now it's popluated with child groups which have childgroups which have...you get the point...until we get to groups that have lines
+         */
+        function snowFlake(group, currentDepth) {
+            if (depth === 0) {
+                return group; //our job is done here. Enjoy your line, I guess
+            }
+            group.groups = [];
+            group.lines.forEach(function (line) {
+                var length = Math.abs(line.x1 - line.x2);
+                var lengthSmall = Math.round(length / 3);
+                var lineAB = {
+                    x1: line.x1,
+                    x2: line.x1 + lengthSmall
+                };
+                var lineBC = {
+                    x1: lineAB.x2,
+                    x2: lineAB.x2 + lengthSmall,
+                    rotate: {
+                        degrees: -60,
+                        x: lineAB.x2
+                    }
+                };
+                var lineCD = copy(lineBC);
+                lineCD.rotate = {
+                    degrees: 60,
+                    x: lineBC.x2
+                };
+                var lineDE = {
+                    x1: lineCD.x2,
+                    x2: lineCD.x2 + lengthSmall
+                };
+                var childGroup = {
+                    rotate: line.rotate, //retain the original line's rotate
+                    lines: [
+                        lineAB,
+                        lineBC,
+                        lineCD,
+                        lineDE
+                    ]
+                };
+                if (currentDepth < depth) {
+                    if (length < 3) {
+                        throw new Error(maxDepthExplanation);
+                    }
+                    childGroup = snowFlake(childGroup, currentDepth + 1); //recursively drill into groups, making childgroups
+                }
+                group.groups.push(childGroup);
+            });
+            group.lines = [];
+            return group;
+        }
+
+        /**
+         * Harness the power of the recursive snowflake function to make one side and copy the
+         * result, tweaking the rotation accordingly, for the other 2 sides. Then, display that
+         * shit in SVG
+         */
+        function apply() {
+            var bottom = snowFlake({ lines: [baseLine] }, 1);
+            var left = copy(bottom);
+            var right = copy(bottom);
+            bottom.rotate = {
+                x: Math.round(baseLine.x2 - (Math.abs(baseLine.x1 - baseLine.x2) / 2)),
+                degrees: 180
+            };
+            left.rotate = {
+                x: baseLine.x1,
+                degrees: -60
+            };
+            right.rotate = {
+                x: baseLine.x2,
+                degrees: 60
+            };
+            var snowFlakeGroups = [
+                bottom,
+                left,
+                right
+            ];
+
+            var snowFlakeSvg = snowFlakeGroups.map(getGroupSvg).join('');
+            svg.innerHTML = snowFlakeSvg;
+        }
+
+        /**
+         * If we have rotate, assemble an SVG rotate attribute with it
+         *
+         * @param rotate {Rotate} e.g. { degrees: numba, x: numba }
+         * @return {String}
+         */
+        function getRotateSvg(rotate) {
+            return rotate != null ? rotateTemplate.format(rotate.degrees, rotate.x, y) : '';
+        }
+
+        /**
+         * Assemble the necessary SVG elements to display a group
+         *
+         * @param group {Group}
+         * @return {String}
+         */
+        function getGroupSvg(group) {
+            var lines = group.lines.map(function (line) {
+                return lineTemplate.format(line.x1, y, line.x2, y, getRotateSvg(line.rotate));
+            }).join('');
+            var groups = Array.isArray(group.groups) ? group.groups.map(getGroupSvg).join('') : ''; //recursively drill into group.groups
+            return groupTemplate.format(getRotateSvg(group.rotate), lines + groups);
+        }
+
+        /**
+         * if value is valid, set the depth in the input field and in the data field with it
+         *
+         * @param value {numba}
+         * @return {bool} indicating whether the value changed or not
+         */
+        function setDepth(value) {
+            if (
+                /\d+/.test(value) &&
+                value !== depth &&
+                value >= 0
+            ) {
+                depth = value;
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * When the user requests a depth change, set the new depth and apply it.
+         */
+        function onDepthChange() {
+            var value = parseInt(depthBox.value.trim());
+            var changed = setDepth(value);
+            if (changed) {
+                apply();
+            }
+        }
+
+        /**
+         * Every iteration makes the length 1/3rd the length and we need the side length to at least be 3 pixels
+         */
+        function setMaxDepth() {
+            var length = Math.abs(baseLine.x1 - baseLine.x2);
+            maxDepth = 0;
+            while (length > 3) {
+                length = Math.round(length / 3);
+                maxDepth++;
+            }
+            depthBox.setAttribute('max', maxDepth);
+            depthBox.setAttribute('title', maxDepthExplanation);
+        }
+    </script>
+</body>
+</html>

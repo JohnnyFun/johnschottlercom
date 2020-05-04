@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        html, body {margin:0;padding:0;height:100%;}
+        svg {
+            width:100%;
+            height:100%;
+            background-color:#eee;
+        }
+        circle {
+            stroke: black;
+            stroke-width: 2;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+    <svg id="svg">
+        It appears your browser is stupid.
+    </svg>
+    <script src="/projects/helpers.js"></script>
+    <script>
+        var svg = document.getElementById('svg');
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var circles = [];
+
+        /**
+         * Draw a circle with circles on its top/bottom/left/right, until we get to radius of 3
+         */
+        function drawCircle(x, y, radius) {
+            //circles.push(`<circle cx="${Math.round(x)}" cy="${Math.round(y)}" r="${Math.round(radius)}" />`);
+            circles.push('<circle cx="{0}" cy="{1}" r="{2}" />'.format(Math.round(x), Math.round(y), Math.round(radius)));
+            var halfRadius = radius / 2;
+            if (halfRadius > 3) {
+                drawCircle(x - radius, y, halfRadius);
+                drawCircle(x + radius, y, halfRadius);
+                drawCircle(x, y - radius, halfRadius);
+                drawCircle(x, y + radius, halfRadius);
+            }
+        }
+
+        drawCircle(width / 2, height / 2, height < width ? height / 2 : width / 2);
+        svg.innerHTML = circles.join('');
+    </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<style>
+    body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #control-panel{
+        position: fixed;
+        top:5px;
+        z-index: 20;
+        padding:10px;
+        margin:5px;
+        border-radius: 4px;
+        background: #eee;
+    }
+</style>
+<head>
+    <title>Oh Sexy Web GL</title>
+</head>
+<body>
+<div id="container"></div>
+<div id="control-panel">
+    Control Panel...kinda
+    <input type='text' autofocus placeholder="number" id='val1' />
+    <input type='text' placeholder="another number" id='val2' />
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+<script>
+    // control panel
+    var $val1 = $('#val1')
+    var $val2 = $('#val2')
+
+    // set the scene size
+    var $window = $(window);
+    var WIDTH = $window.width(),
+        HEIGHT = $window.height();
+
+    // set some camera attributes
+    var VIEW_ANGLE = 45,
+        ASPECT = WIDTH / HEIGHT,
+        NEAR = 0.1,
+        FAR = 10000;
+
+    // create a WebGL renderer, camera
+    // and a scene
+    var renderer = new THREE.WebGLRenderer();
+    var camera =
+        new THREE.PerspectiveCamera(
+            VIEW_ANGLE,
+            ASPECT,
+            NEAR,
+            FAR);
+
+    var scene = new THREE.Scene();
+    
+    // add the camera to the scene
+    scene.add(camera);
+
+    // the camera starts at 0,0,0
+    // so pull it back
+    var initialZoom = 500;
+    camera.position.z = initialZoom;
+    camera.lookAt(new THREE.Vector3(-190, 0, 0));
+
+    // start the renderer
+    renderer.setSize(WIDTH, HEIGHT);
+
+
+    //SPHERE
+    // set up the sphere vars
+    var radius = 5,
+        segments = 8,
+        rings = 8;
+
+    // create the sphere's material
+    var sphereMaterial =
+        new THREE.MeshLambertMaterial(
+        {
+            color: 0x446932
+        });
+
+    var sphereCount = 60;
+    var spheres = [];
+    for (var i = sphereCount; i >= 0; i--) {
+        // create a new mesh with
+        // sphere geometry
+        var sphere = new THREE.Mesh(
+            new THREE.SphereGeometry(
+                radius,
+                segments,
+                rings),
+            sphereMaterial);
+
+        sphere.position.x = radius * -i;
+
+        // add the sphere to the scene
+        spheres.push(sphere);
+        scene.add(sphere);
+    }
+
+    // create a point light
+    var pointLight =
+        new THREE.PointLight(0xFFFFFF);
+
+    // set its position
+    pointLight.position.x = 10;
+    pointLight.position.y = 50;
+    pointLight.position.z = 130;
+
+    // add to the scene
+    scene.add(pointLight);
+
+    var animationManager = {
+        includeAction: function(actionName) {
+            this.actions[actionName] = this.excludedActions[actionName];
+        },
+
+        excludeAction: function (actionName) {
+            this.excludedActions[actionName] = this.actions[actionName];
+            delete this.actions[actionName];
+        },
+
+        actions: {
+            animateZoom: function () {
+                camera.position.z = Math.pow(.5, timeLinePosition / 200) * initialZoom;
+                if (camera.position.z <= 300) {
+                    camera.position.z = 300; //correct in case we went overboard...
+                    //this.includeAction('animatePan');
+                    this.excludeAction('animateZoom');
+                }
+            },
+            animateWriggle: function () {
+                spheres.forEach(function (sphere, index) {
+                    var val1 = $val1.val()
+                    if (isNaN(val1) || val1 === '') val1 = 5
+                    var val2 = $val2.val()
+                    if (isNaN(val2) || val2 === '') val2 = 20
+                    
+                    var y = Math.sin((timeLinePosition + (index * val1)) / val2);
+                    sphere.position.y -= y;
+                    sphere.material.color.setRGB(.4, Math.abs(y), .5);
+                });
+            },
+            animatePan: function () {
+                //r^2 = x^2 + x^2  -- use ratio of circle values
+                //sounds like PI...
+                //camera.position.x++;
+                //camera.position.z--;
+            }
+            //,
+            //animateLighting: function () {
+            //    pointLight.position.x += 10;
+            //    pointLight.position.y += 50;
+            //    pointLight.position.z += 130;
+            //}
+        },
+
+        /**
+         * any animations that are put on hold go here
+         */
+        excludedActions: {
+            
+        }
+    };
+
+    function animate() {
+        for (var action in animationManager.actions) {
+            animationManager.actions[action].call(animationManager);
+        }
+        timeLinePosition++;
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(animate)
+    }
+
+    var timeLinePosition, animateActions;
+    /**
+     * one animation interval running always every 40 milliseconds
+     */
+    function init() {
+        timeLinePosition = 0; //global var that is incremented to be used by any animation functions as a state parameter
+        // setInterval(animate, 40);
+        window.requestAnimationFrame(animate)
+    }
+
+    // get the DOM element to attach to
+    // - assume we've got jQuery to hand
+    var $container = $('#container');
+
+    // attach the render-supplied DOM element
+    $container.append(renderer.domElement);
+    init();
+</script>
+</body>
+</html>

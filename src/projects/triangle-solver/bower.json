@@ -1,0 +1,21 @@
+{
+  "name": "TriangleSolver",
+  "version": "3.0.0",
+  "authors": [
+    "JohnnyFun <jcschottler1991@gmail.com>"
+  ],
+  "description": "Solve the shit out of triangles, bitches.",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.3",
+    "ractive": "~0.7.3"
+  }
+}

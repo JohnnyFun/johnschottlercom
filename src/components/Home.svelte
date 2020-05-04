@@ -27,8 +27,16 @@
       ]
     },
     {
+      title: 'Tic tac toe',
+      href: 'projects/tic-tac-toe/index.html',
+      desc: 'Play tic tac to against a (kinda) trained computer. Made some of the logic from a course, but added a GUI and tweaked how the algorithm learns--the course only showed on CLI, which wasn\'t as fun.',
+      tags: [
+        'Machine Learning',
+      ]
+    },
+    {
       title: 'Random trees',
-      href: 'projects/random-trees/index.html',
+      href: 'projects/random-tree.html',
       desc: 'Generate random trees svg trees.',
       tags: [
         'SVG',
@@ -36,10 +44,34 @@
     },
     {
       title: 'Waterworm',
-      href: 'projects/water-worm/index.html',
+      href: 'projects/water-worm.html',
       desc: '3d worm-thing swimming through the digital realms, only loosely controllable',
       tags: [
         'Threejs',
+      ]
+    },
+    {
+      title: 'Snowflake',
+      href: 'projects/snowflake.html',
+      desc: 'Infinite permiter in a finite space...until you run out of pixels.',
+      tags: [
+        'SVG',
+      ]
+    },
+    {
+      title: 'Circle heaven',
+      href: 'projects/circle-heaven.html',
+      desc: 'Start with a big circle, then recursively draw more circles until you just can\'t draw any more circles.',
+      tags: [
+        'SVG',
+      ]
+    },
+    {
+      title: 'Triangle solver',
+      href: 'projects/triangle-solver/index.html',
+      desc: 'Given 3 pieces of info about a triangle, use trigonometric laws to determine the other info and also draw it.',
+      tags: [
+        'SVG',
       ]
     },
     {
@@ -50,30 +82,6 @@
         'SVG',
       ]
     },
-    {
-      title: 'Snowflake',
-      href: 'projects/snow-flake/index.html',
-      desc: 'Infinite permiter in a finite space...until you run out of pixels.',
-      tags: [
-        'SVG',
-      ]
-    },
-    {
-      title: 'Circle heaven',
-      href: 'projects/circle-heaven',
-      desc: 'Start with a big circle, then recursively draw more circles until you just can\'t draw any more circles.',
-      tags: [
-        'SVG',
-      ]
-    },
-    {
-      title: 'Triangle solver',
-      href: 'projects/triangle-solver',
-      desc: 'Given 3 pieces of info about a triangle, use trigonometric laws to determine the other info and also draw it.',
-      tags: [
-        'SVG',
-      ]
-    }
   ]
 
   // let search = null
@@ -101,7 +109,7 @@
     width: 100%;
     min-width: 20rem;
     max-width: 30rem;
-    height: 20rem;
+    height: 25rem;
     border: 1px solid var(--primary);
     border-radius: 4px;
     transition: transform .3s;

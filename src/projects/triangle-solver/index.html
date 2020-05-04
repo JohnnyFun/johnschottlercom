@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+    <title>Triangle Time!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="bower_components/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/all.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+<div id="triangleTemplate"></div>
+<div id="message"></div>
+    <!--Inline template so we can open this up with the file system--ajax doesn't work so hot if you open up the html file directly-->
+<script type="text/ractive" id="triangleTemplateRactive">
+    <div class="inputs well">
+    <a href="#" on-click="collapseToggle" class="glyphicon glyphicon-chevron-{{#if collapsed}}down{{else}}up{{/if}}"></a>
+    {{#if !collapsed}}
+    <div id="formcontainer">
+        {{#if error != null}}
+        <div class="alert alert-danger">{{error}}</div>{{/if}}
+
+        {{#if warnings && warnings.length > 0}}
+        <div class="alert alert-warning">{{#each warnings}}{{.}}<br/>{{/each}}
+        </div>
+        {{/if}}
+
+        {{#if alternateSolution != null}}
+        <div class="alert alert-info">
+            This triangle has an alternate solution.
+            <button on-click="toggleAltSolution" class="btn">Toggle</button>
+        </div>
+        {{/if}}
+        <form on-submit="solve">
+            <div><label for="s1">S1&nbsp;</label><input type="number" step="any" min="0" placeholder="Side 1" value="{{s1}}" id="s1"/>
+            </div>
+            <div><label for="s2">S2&nbsp;</label><input type="number" step="any" min="0" placeholder="Side 2" value="{{s2}}" id="s2"/>
+            </div>
+            <div><label for="s3">S3&nbsp;</label><input type="number" step="any" min="0" placeholder="Side 3" value="{{s3}}" id="s3"/>
+            </div>
+            <div><label for="a1">A1&nbsp;</label><input type="number" step="any" min="0" placeholder="Angle 1" value="{{a1}}" id="a1"/>
+            </div>
+            <div><label for="a2">A2&nbsp;</label><input type="number" step="any" min="0" placeholder="Angle 2" value="{{a2}}" id="a2"/>
+            </div>
+            <div><label for="a3">A3&nbsp;</label><input type="number" step="any" min="0" placeholder="Angle 3" value="{{a3}}" id="a3"/>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">Solve That Shit!</button>
+                <button type="button" class="btn" on-click="clear">Clear</button>
+            </div>
+        </form>
+    </div>
+    {{/if}}
+</div>
+
+{{#if solved}}
+<svg id="svg" viewBox="0 0 {{drawData.screenW}} {{drawData.screenH + 40}}">
+    No SVG for you!
+    <!--Base side is the first side in the list (longest side will have 2 acute angles at either side)-->
+    {{#with drawData.lines[0]}}
+    <g>
+        <text x="{{sideLength/2}}" y="{{drawData.screenH + 20}}">{{realSideLength}}</text>
+        <line x1="0"
+          y1="{{drawData.screenH}}"
+          x2="{{sideLength}}"
+          y2="{{drawData.screenH}}"/>
+    </g>
+    {{/with}}
+
+    <!--Second line-->
+    {{#with drawData.lines[1]}}
+    <g transform="rotate({{-angle}} 0,{{drawData.screenH}})">
+        <!--base's angle label rotates with this line up to the top...-->
+        <text x="{{sideLength - 35}}" y="{{drawData.screenH + 70}}" transform="rotate({{angle}} {{sideLength}},{{drawData.screenH}})">{{drawData.lines[0].angle}}&deg;</text>
+
+        <text x="{{sideLength/2}}" y="{{drawData.screenH - 10}}">{{realSideLength}}</text>
+        <text x="60" y="{{drawData.screenH - 10}}" transform="rotate({{angle}} 0,{{drawData.screenH}})">{{angle}}&deg;</text>
+        <line x1="0"
+              y1="{{drawData.screenH}}"
+              x2="{{sideLength}}"
+              y2="{{drawData.screenH}}"/>
+    </g>
+    {{/with}}
+
+    <!--3rd line (drawn from the end of the first line)-->
+    {{#with drawData.lines[2]}}
+    <g transform="rotate({{angle}} {{drawData.lines[0].sideLength}},{{drawData.screenH}})">
+        <text x="{{drawData.lines[0].sideLength - sideLength/2}}" y="{{drawData.screenH - 10}}">{{realSideLength}}</text>
+        <text x="{{drawData.lines[0].sideLength - 110}}" y="{{drawData.screenH - 10}}" transform="rotate({{-angle}} {{drawData.lines[0].sideLength}},{{drawData.screenH}})">{{angle}}&deg;</text>
+        <line x1="{{drawData.lines[0].sideLength - sideLength}}"
+              y1="{{drawData.screenH}}"
+              x2="{{drawData.lines[0].sideLength}}"
+              y2="{{drawData.screenH}}" />
+    </g>
+    {{/with}}
+</svg>
+{{/if}}
+</script>
+
+<script src="js/polyfills.js"></script>
+<script src="js/helpers.js"></script>
+<script src="js/solve.js"></script>
+<script src="bower_components/ractive.min.js"></script>
+<script src="bower_components/jquery.min.js"></script>
+
+<script src="js/draw.js"></script>
+
+<!--testing: uncomment out these scripts to run unit tests too-->
+<!--<script src="tests/helpersTests.js"></script>
+<script src="tests/solveTests.js"></script>
+<script src="tests/drawTests.js"></script>
+<script src="tests/unittester.js"></script>-->
+</body>
+</html>

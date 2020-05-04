@@ -1,0 +1,280 @@
+<html>
+<head>
+<title>Triangle Time!</title>
+<style type="text/css">
+
+h2
+{
+	font-family:verdana; text-align:center;
+}
+
+p
+{
+	font-family:verdana;
+}
+
+</style>
+
+<script type="text/javascript">
+    function $(id)
+    {
+       return document.getElementById(id);
+    }
+    function clearAll() {
+        for (i = 1; i <= 3; i++) {
+            $('side' + i).value = "";
+            $('angle' + i).value = "";
+        }
+    }
+	function cases()
+	{
+
+		var s1=$('side1').value;
+		var s2=$('side2').value;
+		var s3=$('side3').value;
+		var a1=$('angle1').value;
+		var a2=$('angle2').value;
+		var a3 = $('angle3').value;
+
+//		var Alta1 = Math.PI - a1; //ambigous cases ssa
+//		var Alta2 = Math.PI - a2;
+//		var Alta3 = Math.PI - a3;
+//		var Alts1 = Math.sqrt(Math.pow(s2,2) + Math.pow(s3,2) - 2*s2*s3*Math.cos((Math.PI/180) * Alta1));
+//		var Alts2 = Math.sqrt(Math.pow(s1,2) + Math.pow(s3,2) - 2*s1*s3*Math.cos((Math.PI/180) * Alta2));
+//		var Alts3 = Math.sqrt(Math.pow(s2,2) + Math.pow(s1,2) - 2*s2*s1*Math.cos((Math.PI/180) * Alta3));
+//		if (Alta1 < 0 || Alta2 < 0 || Alta3 < 0)
+//		{
+		
+		    
+        
+		if(s1 == "" && s2 == "" && s3 == "")          //aaa
+		{
+			alert("Must have at least one side length");
+		}
+		else if(a1 == "" && a2 == "" && a3 == "")		//sss
+		{
+			a1=(180/Math.PI) * Math.acos((Math.pow(s2,2) + Math.pow(s3,2) - Math.pow(s1,2))/(2*s2*s3));
+			a2=(180/Math.PI) * Math.acos((Math.pow(s1,2) + Math.pow(s3,2) - Math.pow(s2,2))/(2*s3*s1));
+			a3=(180/Math.PI) * Math.acos((Math.pow(s2,2) + Math.pow(s1,2) - Math.pow(s3,2))/(2*s2*s1));
+			$('angle1').value=a1;
+			$('angle2').value=a2;
+			$('angle3').value=a3;
+		}
+		
+		else if(a1 == "" && a2 == "" && s3 == "")	//sas
+		{
+			s3=Math.sqrt(Math.pow(s2,2) + Math.pow(s1,2) - 2*s2*s1*Math.cos((Math.PI/180) * a3));
+			a1=(180/Math.PI) * Math.acos((Math.pow(s2,2) + Math.pow(s3,2) - Math.pow(s1,2))/(2*s2*s3));
+			a2=(180/Math.PI) * Math.acos((Math.pow(s1,2) + Math.pow(s3,2) - Math.pow(s2,2))/(2*s3*s1));
+			$('angle1').value=a1;
+			$('angle2').value=a2;
+			$('side3').value=s3;
+		}
+		else if(s1 == "" && a2 == "" && a3 == "") //BROKEN
+		{
+			s1=Math.sqrt(Math.pow(s2,2) + Math.pow(s3,2) - 2*s2*s3*Math.cos((Math.PI/180) * a1));
+			a2=(180 / Math.PI) * Math.acos((Math.pow(s1,2) + Math.pow(s3,2) - Math.pow(s2,2))/(2*s3*s1));
+			a3=(180 / Math.PI) * Math.acos((Math.pow(s2, 2) + Math.pow(s1, 2) - Math.pow(s3, 2)) / (2 * s2 * s1));
+			$('side1').value=s1;
+			$('angle2').value=a2;
+			$('angle3').value=a3;
+		}
+		else if(s2 == "" && a1 == "" && a3 == "")
+		{
+			s2=Math.sqrt(Math.pow(s1,2) + Math.pow(s3,2) - 2*s1*s3*Math.cos((Math.PI/180) * a2));
+			a1=(180/Math.PI) * Math.acos((Math.pow(s2,2) + Math.pow(s3,2) - Math.pow(s1,2))/(2*s2*s3));
+			a3=(180/Math.PI) * Math.acos((Math.pow(s2,2) + Math.pow(s1,2) - Math.pow(s3,2))/(2*s2*s1));
+			$('side2').value=s2;
+			$('angle1').value=a1;
+			$('angle3').value=a3;
+		}
+		
+		else if(s1 == "" && s2 == "" && a1 == "")	//saa
+		{
+			a1=180-a2-a3;
+			s1=(s3*Math.sin((Math.PI/180) * a1))/Math.sin((Math.PI/180) * a3);
+			s2=(s3*Math.sin((Math.PI/180) * a2))/Math.sin((Math.PI/180) * a3)
+			$('side1').value=s1;
+			$('side2').value=s2;
+			$('angle1').value=a1;
+		}
+		else if(s2 == "" && s3 == "" && a2 == "")
+		{
+			a2=180-a1-a3;
+			s2=(s1*Math.sin((Math.PI/180) * a2))/Math.sin((Math.PI/180) * a1);
+			s3=(s1*Math.sin((Math.PI/180) * a3))/Math.sin((Math.PI/180) * a1);
+			$('side2').value=s2;
+			$('side3').value=s3;
+			$('angle2').value=a2;
+		}
+		else if(s3 == "" && s1 == "" && a3 == "")
+		{
+			a3=180-a1-a2;
+			s3=(s2*Math.sin((Math.PI/180) * a3))/Math.sin((Math.PI/180) * a2);
+			s1=(s2*Math.sin((Math.PI/180) * a1))/Math.sin((Math.PI/180) * a2);
+			$('side3').value=s3;
+			$('side1').value=s1;
+			$('angle3').value=a3;
+		}
+		else if(s1 == "" && s3 == "" && a1 == "")
+		{
+			a1=180-a2-a3;
+			s1=(s2*Math.sin((Math.PI/180) * a1))/Math.sin((Math.PI/180) * a2);
+			s3=(s2*Math.sin((Math.PI/180) * a3))/Math.sin((Math.PI/180) * a2);
+			$('side1').value=s1;
+			$('side3').value=s3;
+			$('angle1').value=a1;
+		}
+		else if(s2 == "" && s3 == "" && a3 == "")
+		{
+			a3=180-a1-a2;
+			s2=(s1*Math.sin((Math.PI/180) * a2))/Math.sin((Math.PI/180) * a1);
+			s3=(s1*Math.sin((Math.PI/180) * a3))/Math.sin((Math.PI/180) * a1);
+			$('side2').value=s2;
+			$('side3').value=s3;
+			$('angle3').value=a3;
+		}
+		else if(s2 == "" && s1 == "" && a2 == "") 
+		{
+			a2=180-a1-a3;
+			s2=(s3*Math.sin((Math.PI/180) * a2))/Math.sin((Math.PI/180) * a3);
+			s1=(s3*Math.sin((Math.PI/180) * a1))/Math.sin((Math.PI/180) * a3);
+			$('side2').value=s2;
+			$('side1').value=s1;
+			$('angle2').value=a2;
+		}
+
+		else if (s1 == "" && a3 == "" && a1 == "")	//ssa -- + " or " + Alts1;, etc. 
+		{
+		    a3 = (180/Math.PI) * Math.asin((s3 * Math.sin((Math.PI/180) * a2)) / s2);
+			a1 = 180-a3-a2;
+			s1 = Math.sqrt(Math.pow(s2,2) + Math.pow(s3,2) - 2*s2*s3*Math.cos((Math.PI/180) * a1));
+			$('side1').value = s1;
+			$('angle3').value = a3;
+			$('angle1').value = a1;
+		}
+		else if(s2 == "" && a1 == "" && a2 == "") 
+		{
+		    a1 = (180 / Math.PI) * Math.asin((s1 * Math.sin((Math.PI / 180) * a3)) / s3);
+			a2=180-a1-a3;
+			s2=Math.sqrt(Math.pow(s1,2) + Math.pow(s3,2) - 2*s1*s3*Math.cos((Math.PI/180) * a2));
+			$('side2').value=s2;
+			$('angle1').value=a1;
+			$('angle2').value=a2;
+		}
+		else if(s3 == "" && a2 == "" && a3 == "") 
+		{
+		    a2 = (180 / Math.PI) * Math.asin((s2 * Math.sin((Math.PI / 180) * a1)) / s1);
+			a3=180-a2-a1;
+			s3=Math.sqrt(Math.pow(s2,2) + Math.pow(s1,2) - 2*s2*s1*Math.cos((Math.PI/180) * a3));
+			$('side3').value=s3;
+			$('angle2').value=a2;
+			$('angle3').value=a3;
+		}
+		else if(s1 == "" && a2 == "" && a1 == "")  
+		{
+		    a2 = (180 / Math.PI) * Math.asin((s2 * Math.sin((Math.PI / 180) * a3)) / s3);
+			a1=180-a2-a3;
+			s1=Math.sqrt(Math.pow(s2,2) + Math.pow(s3,2) - 2*s2*s3*Math.cos((Math.PI/180) * a1));
+			$('side1').value=s1;
+			$('angle2').value=a2;
+			$('angle1').value=a1;
+		}
+	
+		else if(s2 == "" && a3 == "" && a2 == "")  
+		{
+		    a3 = (180 / Math.PI) * Math.asin((s3 * Math.sin((Math.PI / 180) * a1)) / s1);
+			a2=180-a1-a3;
+			s2=Math.sqrt(Math.pow(s1,2) + Math.pow(s3,2) - 2*s1*s3*Math.cos((Math.PI/180) * a2));
+			$('side2').value=s2;
+			$('angle3').value=a3;
+			$('angle2').value=a2;
+		}
+		else if(s3 == "" && a1 == "" && a3 == "") 
+		{
+		    a1 = (180 / Math.PI) * Math.asin((s1 * Math.sin((Math.PI / 180) * a2)) / s2);
+			a3=180-a1-a2;
+			s3=Math.sqrt(Math.pow(s2,2) + Math.pow(s1,2) - 2*s2*s1*Math.cos((Math.PI/180) * a3));
+			$('side3').value=s3;
+			$('angle1').value=a1;
+			$('angle3').value=a3;
+		}
+		
+		else if(s1 == "" && s2 == "" && a3 == "") //asa   
+		{
+			a3=180-a1-a2;
+			s1=(s3*Math.sin((Math.PI/180) * a1))/Math.sin((Math.PI/180) * a3);
+			s2=(s3*Math.sin((Math.PI/180) * a2))/Math.sin((Math.PI/180) * a3);
+			$('side1').value=s1;
+			$('side2').value=s2;
+			$('angle3').value=a3;
+		}
+		else if(s1 == "" && s3 == "" && a2 == "") 
+		{
+			a2=180-a1-a3;
+			s3=(s2*Math.sin((Math.PI/180) * a3))/Math.sin((Math.PI/180) * a2);
+			s1=(s2*Math.sin((Math.PI/180) * a1))/Math.sin((Math.PI/180) * a2);
+			$('side3').value=s3;
+			$('side1').value=s1;
+			$('angle2').value=a2;
+		}
+		else if(s3 == "" && s2 == "" && a1 == "") 
+		{
+			a1=180-a3-a2;
+			s3=(s1*Math.sin((Math.PI/180) * a3))/Math.sin((Math.PI/180) * a1);
+			s2=(s1*Math.sin((Math.PI/180) * a2))/Math.sin((Math.PI/180) * a1);
+			$('side3').value=s3;
+			$('side2').value=s2;
+			$('angle1').value = a1;
+	    }
+}
+</script>
+</head>
+<body>
+    <h2>Welcome to the triangle zone; the place where the party never ends!</h2>
+    <p>
+        Three values are needed to solve any triangle. Angle values are in degrees.<br /><b>Note:</b> corresponding sides and angles are 
+        opposites, as shown in the diagram.
+    </p>
+    
+    <table>
+      <tr>
+          <td>
+              <input type="text" id="side1"/>Side one<br/>
+              <input type="text" id="side2"/>Side two<br/>
+              <input type="text" id="side3"/>Side three<br/>
+              <input type="text" id="angle1"/>Angle one<br/>
+              <input type="text" id="angle2"/>Angle two<br/>
+              <input type="text" id="angle3"/>Angle three<br/>
+
+              <input type="button" value="Solve that shit" onclick="cases()"/>
+              <input type="button" value="Clear All" onclick="clearAll()"/>
+          </td>
+	<td>
+		<img src="TriangleDiagram copy.jpg" /><br />
+	</td>
+	
+      </tr>
+    </table>
+    
+    <pre>
+        Well, I'm tired of working on this.
+          THE GOOD:
+           -will solve all possible right triangles and give one solution for any possible oblique triangle.
+           -I'll probably make it better some day in the future when I'm a better programmer and bored.
+           
+          THE BAD: 
+           -must have exactly three boxes filled in.
+           -ambiguous SSA scenarios will generate only one of the two solutions.
+           -when a triangle is impossible, NaN will appear is some of the boxes instead of a pretty alert box telling you exactly why your triangle 
+              impossible.
+           -was tentatively checked by an 18 year old very junior programmer, thus it may have some simple errors syntax errors. Just call me if you run into 
+                something you don't understand. 
+           -Also, it could be much more efficient, but computers are insanely fast, and this is good enough for you.
+           
+          THE UGLY:
+           -It could be more visually appealing.
+           -It could have more "fun" features like printing out the area and perimeter as well.
+    </pre>
+</body>
+</html>

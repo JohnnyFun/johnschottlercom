@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        html, body {margin:0;padding:0;height:100%;}
+        svg {
+            width:100%;
+            height:100%;
+            background-color:#eee;
+        }
+        polyline {
+            stroke: black;
+            stroke-width: 2;
+            fill: none;
+        }
+        h1{
+            text-align:center;
+            position:absolute;
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Algorithm Visualization</h1>
+    <svg id="svg">
+        It appears your browser is stupid.
+    </svg>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="/projects/helpers.js"></script>
+    <script>
+        var $svg = $('#svg');
+        var width = $svg.outerWidth();
+        var height = $svg.outerHeight();
+        var lines = [];
+        var y = 10;
+        var width = width;
+        var lineCount = 1;
+        var lineLength = width;
+        var linePadding = 10;
+        while (y < height) {
+            for (var i = 0; i < lineCount; i++) {
+                var lineStart = Math.round(i * lineLength);
+                var lineEnd = Math.round(lineStart + lineLength - linePadding); //30 px padding between each line...
+                lines.push('<polyline points="{0},{1} {2},{1}" />'.format(lineStart, y, lineEnd));
+            }
+
+            y += 150; //move lines down 10px each time
+            lineCount *= 2; //double the number of lines with each iteration
+            lineLength /= 2;
+        }
+        $svg.html(lines.join(''));
+    </script>
+</body>
+</html>

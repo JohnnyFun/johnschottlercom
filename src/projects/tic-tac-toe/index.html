@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic Tac Toe</title>
+</head>
+<style>
+    body {
+        background: #000;
+        color: #eee;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .game {
+        display: grid;
+        grid-template-columns: 32% 32% 32%;
+        grid-template-rows: 32% 32% 32%;
+        margin: 0;
+        padding: 0;
+        height: 100vmin;
+        width: 100vmin;
+        margin:0px auto;
+    }
+
+    .pos {
+        text-align: center;
+        color: #eee;
+        font-size: 30vmin;
+        margin: 0;
+        padding: 0;
+    }
+
+    .p1, .p4, .p7, .p2, .p5, .p8 {
+        border-right: 3px solid #eee;
+    }
+    .p4, .p5, .p6, .p7, .p8, .p9 {
+        border-top: 3px solid #eee;
+    }
+</style>
+<body>
+    <div class="game"></div>
+</body>
+<script>
+    /*Learned
+    - due to the way I assign rewards for winning games, the ai learned to draw the game out favoring a win that resulted from more moves. so it *seems* like you get it to do a dumb move, but it's still ensuring its win! funny
+        - this would also maybe explain why it doesn't learn to take center spot initially...it will still get points for a draw! slimy bastard!
+    - it definitely learned to set itself up to have multiple winning moves for the next move, so the opponent cannot win
+    */
+    const noop = () => {}
+    const storageKey = 'stateValues'
+
+    let stateValues = {}
+
+    class TicTacToe {
+        constructor() {
+            this.X = 'X'
+            this.O = 'O'
+            this.onMove = noop 
+            this.onComplete = noop
+            this.headless = false // by default, game state is rendered to the UI. But no need when training...
+            this.possibleMoves = [0,1,2,3,4,5,6,7,8]
+            // winning positions are effectively what you want agent to learn--and how to get into these positions
+            this.possibleWins = [
+                // horizontal
+                [0,1,2],
+                [3,4,5],
+                [6,7,8],
+                // vertical
+                [0,3,6],
+                [1,4,7],
+                [2,5,8],
+                // diagnal
+                [0,4,8],
+                [2,4,6]
+            ]
+            this.gameBoard = document.querySelector('.game')
+            this.gameBoard.addEventListener('click', e => this.makeMove(parseInt(e.target.dataset.pos)))
+            this.reset()
+        }
+
+        drawBoard(state) {
+            if (!this.headless) {
+                const boardHtml = this.possibleMoves.map(pos => `<div data-pos="${pos}" class="pos p${pos+1}">${state[pos] == null ? '' : state[pos]}</div>`).join('')
+                this.gameBoard.innerHTML = boardHtml
+            }
+            this.state = state
+        }
+
+        reset(state = {}) {
+            this.drawBoard(state)
+            this.currentPlayer = this.X
+            this.winner = null
+        }
+
+        makeMove(pos) {
+            if (!this.headless) {
+                const el = document.querySelector(`[data-pos="${pos}"]`)
+                if (el == null)
+                    throw new Error(`Invalid move: ${pos}`)
+                if (el.innerText !== '') {
+                    alert(`${pos} spot taken by "${el.innerText}"`)
+                    return
+                }
+                el.innerText = this.currentPlayer
+            }
+            this.state[pos] = this.currentPlayer
+            this.checkWinner() 
+        }
+
+        getOpenPositions() {
+            const takenSpots = Object.keys(this.state).map(p => parseInt(p))
+            return this.possibleMoves.filter(p => !takenSpots.some(pp => pp === p))
+        }
+
+        checkWinner() {
+            this.winner = this.getWinner()
+            if (this.winner == null) {
+                this.currentPlayer = this.getOtherPlayer()
+                this.onMove()
+                return
+            }
+            if (this.winner === 0)
+                this.tie()
+            else
+                this.celebrate()
+        }
+
+        getOtherPlayer() {
+            return this.currentPlayer === this.X ? this.O : this.X
+        }
+
+        getWinner() {
+            // if all spots for a possible win is held by the same player
+            for (let i = 0; i < this.possibleWins.length; i++) {
+                const win = this.possibleWins[i];
+                if (this.state[win[0]] === undefined)
+                    continue
+                if (this.state[win[0]] === this.state[win[1]] && this.state[win[0]] === this.state[win[2]])
+                    return this.state[win[0]]
+            }
+            const noSpotsLeft = Object.keys(this.state).length === this.possibleMoves.length
+            return noSpotsLeft ? 0 : null
+        }
+
+        celebrate() {
+            this.onComplete(`${this.winner} wins! ${this.getOtherPlayer()} shall be put to death at their earliest convenience.`)
+        }
+
+        tie() {
+            this.onComplete('Nobody wins, so everyone must die.')
+        }
+    }
+
+    class Agent {
+        constructor(player, game, isTraining) {
+            this.player = player
+            this.game = game
+            this.isTraining = isTraining
+            this.epsilon = 5
+            this.time = 0
+            this.stateHistory = []
+        }
+
+        go() {
+            this.time += 1
+            const move = this.getNextMove()
+            this.game.makeMove(move)
+            if (this.isTraining)
+                this.stateHistory.push(this.getSerializedStateKey(this.game.state))
+        }
+
+        getNextMove() {
+            const possibleMoves = this.game.getOpenPositions()
+            if (possibleMoves === 1)
+                return possibleMoves[0]
+            if (this.shouldDoRandomMove()) {
+                // console.count('random move')
+                return this._getRandomMove(possibleMoves)
+            }
+
+            // determine most promising next state, based on possibleMoves and our experience
+            // look 1 move into future and pick state that has highest average value! Could even project further, but see how 1 does...
+            // TODO: look how ARS learns though--it doesn't look at future moves--it learns by looking at delta between prevState and currentState?
+            let maxAverageRewardPotential = -10
+            let certainty = 1
+            let selectedMove = possibleMoves[0]
+            let unseenMoves = []
+            for (let i = 0; i < possibleMoves.length; i++) {
+                const move = possibleMoves[i]
+                const resultingState = { ...this.game.state, [move]: this.player }
+                const key = this.getSerializedStateKey(resultingState)
+                const stateVal = stateValues[key]
+                if (stateVal == null) {
+                    unseenMoves.push(move)
+                    continue
+                }
+                // highest average reward (and the one with most certainty)
+                if (stateVal.avg > maxAverageRewardPotential || (stateVal.avg === maxAverageRewardPotential && stateVal.count > certainty)) { 
+                    maxAverageRewardPotential = stateVal.avg
+                    certainty = stateVal.count
+                    selectedMove = move
+                }
+            }
+            // if we're pretty sure we're going to lose, try a move we haven't seen if any...
+            if (maxAverageRewardPotential < (1/9) && unseenMoves.length > 0){
+                // console.log('random unseen move')
+                return this._getRandomMove(unseenMoves)
+            } else {
+                // console.log(`expected reward: ${maxAverageRewardPotential}, certainty: ${certainty}`)
+                return selectedMove
+            }
+        }
+
+        _getRandomMove(moves) {
+            return moves[Math.round(Math.random() * (moves.length - 1))]
+        }
+
+        shouldDoRandomMove() {
+            // do fewer random/exploratory moves as the agent does more moves
+            //console.log('rand perc', this.epsilon / this.time)
+            return !this.isTraining ? false : (Math.random() * 100) < this.epsilon
+        }
+
+        learn() {
+            // TODO: what about valuing entire games like: M4,Y2,M8? Hmm, are there more possible game states than move combos to win/loss/draw?
+
+            // TODO: this incentivises longer games...so it will learn to block instead of win
+            // 1 for win, 0 for draw so it gets mildly punished for not winning and doesn't learn to just make the game last a long time, -1 for lose to punish 
+            const reward = this.game.winner === this.player ? 1 : this.game.winner === 0 ? 0 : -1
+            const moveCount = this.stateHistory.length
+            this.stateHistory.forEach((s, i) => {
+                const stateReward = (i / moveCount) * reward // early moves get less of the reward than later moves, last one earns full reward
+                let stateVal = stateValues[s]
+                if (stateVal == null)
+                    stateVal = stateValues[s] = { avg: 1, count: 1 } // initialize with high average, so we try it more to learn it's true value...
+                else {
+                    stateVal.count++
+                    stateVal.avg += (stateReward - stateVal.avg) / stateVal.count // update running average by adding the delta average of the new reward
+                    // if (i === moveCount && stateVal.avg < 1 && this.player === this.game.winner)
+                    //     throw new Error('Winning moves should never go below 1')
+                    if (i < moveCount && stateVal.avg >= 1)
+                        throw new Error('non-winning moves should never go above or equal to 1')
+                }
+            })
+            // console.log(this.player, 'learned', reward, stateValues)
+            this.stateHistory = []
+        }
+
+        getSerializedStateKey(state) {
+            // make state values useful to any agent, regardless of whether they're x or o. Store the state's value as me/you, rather than x/o
+            var genericState = this.game.possibleMoves.map(pos => state[pos] === this.player ? 'm' : state[pos] == null ? 'e' : 'y').join('') // m = me, e = empty, y = you
+            return genericState
+        }
+    }
+
+    let game = new TicTacToe()
+    function agentVsYou(learn = false, humanFirst = false) {
+        game.headless = false
+        game.reset()
+        let agentPlayer = humanFirst ? game.getOtherPlayer() : game.currentPlayer
+        let agent = new Agent(agentPlayer, game, learn)
+        const _agentVsYou = () => {
+            game.onComplete = msg => {
+                setTimeout(() => {
+                    if (learn) {
+                        // learn from playing a real person
+                        agent.learn() 
+                        updateStateValues()
+                    }
+                    console.log(msg)
+                    game.reset()
+                    _agentVsYou()
+                })
+            }
+            game.onMove = () => {
+                console.log(game.state)
+                if (game.currentPlayer === agent.player)
+                    setTimeout(() => agent.go(), 300) // otherwise it looks far too eager...
+            }
+            if (!humanFirst)
+                agent.go()
+        }
+        _agentVsYou()
+    }
+
+    function train(numGames) {
+        game.headless = true
+        // game.onComplete = console.log
+        let p1 = new Agent(game.currentPlayer, game, true)
+        let p2 = new Agent(game.getOtherPlayer(), game, true)
+        for (let i = 0; i < numGames; i++) {
+            playGame(game, p1, p2)
+            p1.learn()
+            p2.learn()
+        }
+        updateStateValues()
+    }
+
+    function playGame(game, p1, p2) {
+        game.reset()
+        let currentPlayer = p1
+        let moves = 0
+        while (game.winner == null || moves < 9) {
+            moves++
+            currentPlayer.go()
+            currentPlayer = currentPlayer === p1 ? p2 : p1
+        }
+    }
+
+    function updateStateValues() {
+        console.log('writing to localstorage...')
+        localStorage.setItem(storageKey, JSON.stringify(stateValues))
+    }
+
+    function loadStateValues() {
+        const val = localStorage.getItem(storageKey) // pull and save to central db in real world scenario, so that everyone who plays against the agent is training it
+        // console.log(JSON.stringify(val))
+
+        // if (val == null)
+            return fetch('./tic-tac-toe-weights/third.json')
+                .then(xhr => xhr.json())
+                .then(json => stateValues = json)
+        // return Promise.resolve(JSON.parse(val))
+    }
+
+    function Running_Avg_Works() {
+        const agent = new Agent(game.X, game, true)
+        agent.stateHistory = []
+    }
+
+    function Takes_Win_Scenarios() {
+        // x takes center of empty board
+        const agent = new Agent(game.X, game, false)
+        game.reset({})
+        game.currentPlayer = agent.player
+        agent.go()
+        console.assert(game.state[4] === 'X', 'should take center since it has most winnable positions?') 
+
+        // a few misc smoke test for win scenarios...
+        const winnableStates = [
+            {4: "O", 5: "X", 6: "O", 8: "X"},
+            {1: "O", 2: "O", 4: "O", 5: "X", 7: "X", 8: "X"},
+            {1: "O", 2: "X", 5: "X", 7: "O", 8: "X"}
+        ]
+        winnableStates.forEach((win, i) => {
+            game.reset(win)
+            game.currentPlayer = agent.player
+            agent.go()
+            console.assert(game.winner === 'X', `win ${i}`)
+        })
+
+        // // smoke tests for scenarios where it should ensure its win for the next move
+        // const strategyScenarios = [
+        //     {0: "O", 2: "X", 7: "O", 8: "X"}
+        // ]
+        // strategyScenarios.forEach((s, i) => {
+        //     game.reset(s)
+        //     game.currentPlayer = agent.player
+        //     agent.go()
+        //     debugger
+        //     console.assert(game.winner === null && (game.state[6] === agent.player))
+        // })
+
+    }
+
+    function Blocks_Lose_Scenarios() {
+        const agent = new Agent(game.X, game, false)
+        const blockScenarios = [
+            {s: {1: "X", 3: "X", 4: "O", 6: "O" }, m: 2},
+            {s: {0: "O", 3: "X", 6: "X", 8: "O"}, m: 4},
+            {s: {1: "X", 2: "O", 3: "X", 4: "O"}, m: 6 },
+            {s: {2: "O", 3: "X", 4: "O"}, m: 6 }
+        ]
+        blockScenarios.forEach((s, i) => {
+            game.reset(s.s)
+            game.currentPlayer = agent.player
+            agent.go()
+            if (game.winner === agent.player)
+                console.log('Agent won unexpectedly: ' + i)
+            console.assert(game.state[s.m] === agent.player || game.winner === agent.player, `lose ${i}`) 
+        })
+    }
+    
+    loadStateValues().then(vals => {
+        stateValues = vals
+        // train(40000)
+        Takes_Win_Scenarios()
+        Blocks_Lose_Scenarios()
+
+        console.log(stateValues)
+        // train until 
+        const distinctStates = Object.keys(stateValues)
+        console.log('total distinct states', distinctStates.length, distinctStates.filter(v => stateValues[v].count === 1).length)
+        const totalStatesPossible = Math.pow(3, 9)
+        console.log('% of states seen', (distinctStates.length / totalStatesPossible)*100)
+
+        // human first
+        // agentVsYou(false, true)
+        // agent first
+        agentVsYou(false, false)
+
+        // train agent manually
+        // agentVsYou(true)
+    })
+</script>
+</html>

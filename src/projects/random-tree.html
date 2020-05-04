@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        #main{
+            margin: 0px auto;
+            width:800px;
+            height:800px;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+            background-color: #E0F5FF;
+        }
+
+        button {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+            /*Twitter bootstrap btn-success styles*/
+            color: #fff;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+            padding: 18px 12px;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <button id="btnTreeMe">Tree Me</button>
+        <svg id="svg">
+            It appears your browser is stupid.
+        </svg>
+    </div>
+    <script src="/projects/helpers.js"></script>
+    <script>
+        var svg = document.getElementById('svg');
+        document.getElementById('btnTreeMe').addEventListener('click', generateTree);
+        var width = svg.clientWidth || svg.parentNode.clientWidth;
+        var height = svg.clientHeight || svg.parentNode.clientHeight;
+        var rotateTemplate = 'transform="rotate({0} {1},{2})"';
+        var polygonTemplate = '<polygon points="{0}" style="fill:{1}" />';
+        var groupTemplate = '<g {0}>{1}</g>';
+        var center = Math.round(width / 2); //x is always center since we're rotating branches relatively to each other
+        var dna = {
+            lengthInitial: [200, 250], //pixels
+            lengthChild: [.5, .7], //percent
+            widthInitial: [20, 25], //pixels
+            widthChild: [.7, .8], //percent
+            angleChild: [-60, 60], //degrees
+            childCount: [3, 4], //how many child branches should each branch have
+
+            limit: 1, //pixels when stop for width or length
+            greenWidth: 2, //pixels when color green
+            gapCloser: 8 //lowers the child branches down the y to close the gap between it and its parent--TODO: instead of this, you should make an angle cut for the child branches, so they match perfectly with parent's top
+        };
+
+        var treeTimeout = 0;
+        generateTree();
+
+        function setToTransition() {
+            window.clearTimeout(treeTimeout);
+            treeTimeout = window.setTimeout(generateTree, 4000);
+        }
+
+        function generateTree() {
+            //setToTransition();
+            var tree = treeMe(getTrunk());
+            var treeSVG = getTreeSVG(tree);
+            svg.innerHTML = '<g transform="translate(0,{0})"><g id="plane" transform="scale(1,-1)">{1}</g></g>'.format(height, treeSVG);
+        }
+
+        /**
+         * Draw a line with randomly sized branches (one on one side, one on the other sied at a fixed, relative angle of 30 degrees)
+         */
+        function treeMe(branch) {
+            //add child branches
+            var childBranchCount = rand.apply(this, dna.childCount);
+            var childBranch;
+
+            var lengthMin = Math.round(branch.length * dna.lengthChild[0]);
+            var lengthMax = Math.round(branch.length * dna.lengthChild[1]);
+            var widthMin = Math.round(branch.endWidth * dna.widthChild[0]);
+            var widthMax = Math.round(branch.endWidth * dna.widthChild[1]);
+
+            var branchY = branch.points[2][1];
+            var branchYEnd = branchY + rand(lengthMin, lengthMax);
+            for (var i = childBranchCount - 1; i >= 0; i--) {
+                childBranch = constructBranch(
+                    rand(lengthMin, lengthMax),
+                    rand(widthMin, widthMax),
+                    rand.apply(this, dna.angleChild),
+                    branchY - dna.gapCloser
+                );
+
+                //recursively create child branches, unless our width or length limit is reached
+                if (!(branch.endWidth <= dna.limit || branch.length <= dna.limit)) {
+                    childBranch = treeMe(childBranch);
+                }
+                branch.branches.push(childBranch);
+            }
+            return branch;
+        }
+
+        function getTrunk() {
+            var trunkLength = rand.apply(this, dna.lengthInitial);
+            var trunkStartWidth = rand.apply(this, dna.widthInitial);
+            return constructBranch(trunkLength, trunkStartWidth, 0, 0);
+        }
+
+        function constructBranch(length, startWidth, angle, y) {
+            var startWidthHalf = Math.round(startWidth / 2);
+            var endWidthMin = Math.round(startWidth * dna.widthChild[0]);
+            var endWidthMax = Math.round(startWidth * dna.widthChild[1]);
+            var endWidth = rand(endWidthMin, endWidthMax);
+            var endWidthHalf = Math.round(endWidth / 2);
+            return {
+                points: [
+                    [center - startWidthHalf, y],
+                    [center + startWidthHalf, y],
+                    [center + endWidthHalf, y + length],
+                    [center - endWidthHalf, y + length]
+                ],
+                angle: angle,
+                branches: [],
+
+                //convenient references so we don't need to determine this every iteration
+                length: length,
+                endWidth: endWidth,
+            }
+        }
+
+        function getTreeSVG(tree) {
+            var strokeColor = tree.endWidth < dna.greenWidth ? 'green' : 'brown';
+            var points = tree.points.map(function (point) {
+                return point.join(',');
+            }).join(' ');
+            var trunk = polygonTemplate.format(points, strokeColor);
+            var branches = tree.branches.map(getTreeSVG).join('');
+            return groupTemplate.format(getRotate(tree), trunk + branches);
+        }
+
+        function getRotate(branch) {
+            var branchBottomY = branch.points[0][1];
+            return branch.angle !== 0 ? rotateTemplate.format(branch.angle, center, branchBottomY) : '';
+        }
+    </script>
+</body>
+</html>
