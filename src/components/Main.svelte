@@ -6,7 +6,6 @@
 
 <main>
   <Route path="/" component={Home} />
-  <Route path="/hey">Hey there</Route>
   <Route component={NotFound} />
 </main>
 

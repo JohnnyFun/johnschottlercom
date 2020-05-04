@@ -9,7 +9,4 @@
 - svelte so nice
 - favicon made with http://www.faviconer.com/
 - hosted on netflify with ssl now, so can do VR games and WebRTC
-
-# TODO
-
-- host needs to be able to send index.html regardless of request path...
+  - netlify configured to always serve index.html so client routing works
