@@ -72,6 +72,7 @@
       desc: 'Given 3 pieces of info about a triangle, use trigonometric laws to determine the other info and also draw it.',
       tags: [
         'SVG',
+        'Ractivejs'
       ]
     },
     {
