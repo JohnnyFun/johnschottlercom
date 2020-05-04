@@ -29,9 +29,10 @@
     {
       title: 'Tic tac toe',
       href: 'projects/tic-tac-toe/index.html',
-      desc: 'Play tic tac to against a (kinda) trained computer. Made some of the logic from a course, but added a GUI and tweaked how the algorithm learns--the course only showed on CLI, which wasn\'t as fun.',
+      desc: 'A course I went through used tic-tac-toe to show basic concepts of machine learning. The instructor built it at the command line in python, but I built a GUI in html,css,js instead. I also played with different reward/learning approaches.',
       tags: [
         'Machine Learning',
+        'Reinforcement Learning'
       ]
     },
     {
