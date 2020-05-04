@@ -32,13 +32,13 @@
     width: 100vw;
     background-color: var(--primary);
     box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0,0,0);
+    z-index: 1000;
   }
 
   a {
     color: var(--primary-text);
     text-decoration: none;
     display: inline-block;
-    margin: .5rem;
   }
 
   a.home {

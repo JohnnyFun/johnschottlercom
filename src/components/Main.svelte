@@ -5,8 +5,8 @@
 </script>
 
 <main>
-	<Route path="/" component={Home} />
-	<Route component={NotFound} />
+  <Route path="/" component={Home} />
+  <Route component={NotFound} />
 </main>
 
 <style>
@@ -14,5 +14,13 @@
     overflow-y:auto;
     overflow-x:auto;
     padding: 2rem;
+    padding-bottom: 6rem;
+    height: calc(100vh - 43px - 43px);
+  }
+
+  @media only screen and (max-width: 350px) {
+    main {
+      height: calc(100vh - 85px - 43px);
+    }
   }
 </style>

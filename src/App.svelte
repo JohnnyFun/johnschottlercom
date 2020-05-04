@@ -1,6 +1,7 @@
 <style>
   :global(*) {
-    box-sizing: border-box; /*so padding doesn't affect width/height*/
+    /*so padding doesn't affect width/height*/
+    box-sizing: border-box; 
   }
 
   :global(:root) {
@@ -16,7 +17,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
     background-color: #eee;
-    color: #666;
+    color: #222;
     margin: 0;
     padding: 0;
   }
@@ -24,21 +25,18 @@
   /*scrollbar styling*/
   /* width */
   :global(::-webkit-scrollbar) {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 0.5rem;
+    width: .8rem;
+    height: .8rem;
   }
 
   /* Track */
   :global(::-webkit-scrollbar-track) {
     background: #f1f1f1;
-    border-radius: 0.5rem;
   }
 
   /* Handle */
   :global(::-webkit-scrollbar-thumb) {
-    background: #c9c9c9;
-    border-radius: 0.5rem;
+    background: #aaa;
   }
 
   /* Handle on hover */
@@ -49,7 +47,7 @@
 
 <script>
 	import Footer from 'Footer'
-	import Routes from 'components/Routes'
+	import Main from 'components/Main'
 	import Navigation from 'components/Navigation'
   import { Router, links } from 'svelte-routing'
 </script>
@@ -57,7 +55,7 @@
 <div use:links>
   <Router>
     <Navigation />
-    <Routes />
+    <Main />
     <Footer />
   </Router>
 </div>
