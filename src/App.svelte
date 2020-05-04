@@ -5,7 +5,7 @@
   }
 
   :global(:root) {
-    --primary: #c36e07;
+    --primary: #008000;
     --primary-text: #eee;
   }
 
@@ -17,7 +17,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
     background-color: #eee;
-    color: #222;
+    color: #555;
     margin: 0;
     padding: 0;
   }

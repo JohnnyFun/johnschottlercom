@@ -1,30 +1,136 @@
+<h1 class="page-title">Some projects. Enjoy.</h1>
 <div class="projects">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+  {#each projects as p}
+    <a href={p.href} target="_blank">
+      <h1>{p.title}</h1>
+      <p>
+        {@html p.desc}
+      </p>
+      <div class="tags">
+        {#each p.tags as t}
+          <div>{t}</div>
+        {/each}
+      </div>
+    </a>
+  {/each}
 </div>
 
 <script>
+  const projects = [
+    {
+      title: 'Dirtball',
+      href: 'projects/dirtball/index.html',
+      desc: 'Game in which you are "Dirtball", a highly-trained ball of sludge and spit on his first mission.',
+      tags: [
+        'Babylonjs',
+        'Cannonjs',
+      ]
+    },
+    {
+      title: 'Random trees',
+      href: 'projects/random-trees/index.html',
+      desc: 'Generate random trees svg trees.',
+      tags: [
+        'SVG',
+      ]
+    },
+    {
+      title: 'Waterworm',
+      href: 'projects/water-worm/index.html',
+      desc: '3d worm-thing swimming through the digital realms, only loosely controllable',
+      tags: [
+        'Threejs',
+      ]
+    },
+    {
+      title: 'Grapher',
+      href: 'projects/grapher/index.html',
+      desc: 'Plot a formula from a textbox with SVG.',
+      tags: [
+        'SVG',
+      ]
+    },
+    {
+      title: 'Snowflake',
+      href: 'projects/snow-flake/index.html',
+      desc: 'Infinite permiter in a finite space...until you run out of pixels.',
+      tags: [
+        'SVG',
+      ]
+    },
+    {
+      title: 'Circle heaven',
+      href: 'projects/circle-heaven',
+      desc: 'Start with a big circle, then recursively draw more circles until you just can\'t draw any more circles.',
+      tags: [
+        'SVG',
+      ]
+    },
+    {
+      title: 'Triangle solver',
+      href: 'projects/triangle-solver',
+      desc: 'Given 3 pieces of info about a triangle, use trigonometric laws to determine the other info and also draw it.',
+      tags: [
+        'SVG',
+      ]
+    }
+  ]
 
+  // let search = null
+
+  // $: projectsFiltered = search === null || search.trim() === '' ? 
+  //     projects : 
+  //     projects.filter(p => JSON.stringify(p).toLowerCase().indexOf(search.toLowerCase()) > -1)
 </script>
 
 <style>
   .projects {
     margin: 0px auto;
-    width: 100%;
-    max-width: 65rem; 
-    min-width: 15rem;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .projects > div {
-    float: left;
+  .projects > a {
+    text-decoration: none;
+    color: var(--primary);
+    display: block;
     margin: 1rem;
     padding: 1rem;
     width: 100%;
+    min-width: 20rem;
+    max-width: 30rem;
     height: 20rem;
-    background-color: blue;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    transition: transform .3s;
+  }
+
+  .projects > a:hover {
+    transform: scale(1.04, 1.04);
+    box-shadow: 0rem 1rem 1rem 0rem #ddd;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .tags {
+    display: flex;
+    justify-content: left;
+  }
+
+  .projects > a > p {
+    color: #444;
+  }
+
+  .tags > div {
+    margin-right: .5rem;
+    padding: .4rem;
+    background-color: var(--primary);
+    color: var(--primary-text);
+    border-radius: 2rem;
+    font-size: 1rem;
   }
 </style>

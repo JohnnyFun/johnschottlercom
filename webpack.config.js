@@ -52,11 +52,11 @@ module.exports = {
   plugins: [
 		new CopyPlugin([
 			{ from: 'src/favicon.ico', to: resolveDist() },
-			{ from: 'src/images', to: resolveDist('images') }
+			{ from: 'src/images', to: resolveDist('images') },
+			{ from: 'src/projects', to: resolveDist('projects') }
 		]),
 		// copy the favicon and images during dev too
 		new WriteFilePlugin({
-				test: /\.(?:ico|png|gif|jpg|jpeg)$/,
 				useHashIndex: true
 		}),
 		new MiniCssExtractPlugin({
