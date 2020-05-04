@@ -37,7 +37,7 @@
     {
       title: 'Random trees',
       href: 'projects/random-tree.html',
-      desc: 'Generate random trees svg trees.',
+      desc: 'Generate random svg trees.',
       tags: [
         'SVG',
       ]
@@ -45,7 +45,7 @@
     {
       title: 'Waterworm',
       href: 'projects/water-worm.html',
-      desc: '3d worm-thing swimming through the digital realms, only loosely controllable',
+      desc: '3d worm-thing swimming through the digital realms...or something',
       tags: [
         'Threejs',
       ]
