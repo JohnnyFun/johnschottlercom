@@ -52,7 +52,8 @@
     <script src="/projects/helpers.js"></script>
     <script>
         var svg = document.getElementById('svg');
-        document.getElementById('btnTreeMe').addEventListener('click', generateTree);
+        var treeMeBtn = document.getElementById('btnTreeMe');
+        treeMeBtn.addEventListener('click', generateTree);
         var width = svg.clientWidth || svg.parentNode.clientWidth;
         var height = svg.clientHeight || svg.parentNode.clientHeight;
         var rotateTemplate = 'transform="rotate({0} {1},{2})"';
@@ -81,10 +82,14 @@
         }
 
         function generateTree() {
-            //setToTransition();
-            var tree = treeMe(getTrunk());
-            var treeSVG = getTreeSVG(tree);
-            svg.innerHTML = '<g transform="translate(0,{0})"><g id="plane" transform="scale(1,-1)">{1}</g></g>'.format(height, treeSVG);
+            treeMeBtn.innerText = 'Generating tree...'
+            setTimeout(() => {
+                //setToTransition();
+                var tree = treeMe(getTrunk());
+                var treeSVG = getTreeSVG(tree);
+                svg.innerHTML = '<g transform="translate(0,{0})"><g id="plane" transform="scale(1,-1)">{1}</g></g>'.format(height, treeSVG);
+                treeMeBtn.innerText = 'Tree Me'
+            })
         }
 
         /**
