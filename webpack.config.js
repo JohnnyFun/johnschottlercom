@@ -16,7 +16,8 @@ module.exports = {
 	entry: resolveClient('main.js'),
 	output: {
 		path: resolveDist(),
-		filename: '[name].[hash].js'
+		filename: '[name].[hash].js',
+		publicPath: '/',
 	},
   resolve: {
 		extensions: ['.mjs', '.js', '.svelte'],
@@ -54,6 +55,7 @@ module.exports = {
 			{ from: 'src/favicon.ico', to: resolveDist() },
 			{ from: 'src/images', to: resolveDist('images') },
 			{ from: 'src/projects', to: resolveDist('projects') },
+			{ from: 'src/textures', to: resolveDist('textures') },
 			{ from: '_redirects', to: resolveDist() } // so netflify knows to always server index.html for client-side routing to work
 		]),
 		// copy the favicon and images during dev too
@@ -74,6 +76,6 @@ module.exports = {
 		contentBase: resolveDist(),
 		hot: false,
 		disableHostCheck: true,
-  	historyApiFallback: true
+		historyApiFallback: true
 	}
 }

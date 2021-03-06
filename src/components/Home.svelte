@@ -1,7 +1,9 @@
-<h1 class="page-title">Some projects. Enjoy.</h1>
+<div class="me-pic">
+  <img src="/images/me.png" alt="me with fruit loops bird" />
+</div>
 <div class="projects">
   {#each projects as p}
-    <a href={p.href} target="_blank">
+    <a class="project" href={p.href} target="_blank">
       <h1>{p.title}</h1>
       <p>
         {@html p.desc}
@@ -24,6 +26,14 @@
       tags: [
         'Babylonjs',
         'Cannonjs',
+      ]
+    },
+    {
+      title: 'VR target shooting game',
+      href: 'projects/vrshooter/index.html',
+      desc: 'Shoot targets with your...gun. Works with oculus browser on quest 2. Probably works on other stuff too.',
+      tags: [
+        'Babylonjs',
       ]
     },
     {
@@ -85,15 +95,19 @@
       ]
     },
   ]
-
-  // let search = null
-
-  // $: projectsFiltered = search === null || search.trim() === '' ? 
-  //     projects : 
-  //     projects.filter(p => JSON.stringify(p).toLowerCase().indexOf(search.toLowerCase()) > -1)
 </script>
 
 <style>
+  .me-pic {
+    text-align: center;
+  }
+
+  .me-pic > img {
+    width: 20rem;
+    height: auto;
+    border-radius: .5rem;
+  }
+
   .projects {
     margin: 0px auto;
     display: flex;
@@ -102,7 +116,7 @@
     flex-wrap: wrap;
   }
 
-  .projects > a {
+  .projects > .project {
     text-decoration: none;
     color: var(--primary);
     display: block;
@@ -122,10 +136,6 @@
     box-shadow: 0rem 1rem 1rem 0rem #ddd;
   }
 
-  h1 {
-    text-align: center;
-  }
-
   .tags {
     display: flex;
     justify-content: left;
@@ -140,7 +150,11 @@
     padding: .4rem;
     background-color: var(--primary);
     color: var(--primary-text);
-    border-radius: 2rem;
+    border-radius: .5rem;
     font-size: 1rem;
+  }
+
+  .me-pic {
+    border-radius: 10px;
   }
 </style>

@@ -1,11 +1,13 @@
 <script>
 	import NotFound from 'components/NotFound'
 	import Home from 'components/Home'
+	import Medical from 'components/Medical'
   import { Router, Route } from 'svelte-routing';
 </script>
 
 <main>
   <Route path="/" component={Home} />
+  <Route path="/medical/stitches" component={Medical} />
   <Route component={NotFound} />
 </main>
 

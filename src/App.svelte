@@ -5,7 +5,7 @@
   }
 
   :global(:root) {
-    --primary: #008000;
+    --primary: #216321;
     --primary-text: #eee;
   }
 
