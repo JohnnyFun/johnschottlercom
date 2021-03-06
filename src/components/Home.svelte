@@ -29,14 +29,6 @@
       ]
     },
     {
-      title: 'VR target shooting game',
-      href: 'projects/vrshooter/index.html',
-      desc: 'Shoot targets with your...gun. Works with oculus browser on quest 2. Probably works on other stuff too.',
-      tags: [
-        'Babylonjs',
-      ]
-    },
-    {
       title: 'Tic tac toe',
       href: 'projects/tic-tac-toe/index.html',
       desc: 'A course I went through used tic-tac-toe to show basic concepts of machine learning. The instructor built it at the command line in python, but I built a GUI in html,css,js instead. I also played with different reward/learning approaches.',
@@ -51,6 +43,14 @@
       desc: 'Generate random svg trees.',
       tags: [
         'SVG',
+      ]
+    },
+    {
+      title: 'VR target shooting game',
+      href: 'projects/vrshooter/index.html',
+      desc: 'Shoot targets with your...gun. Works with oculus browser on quest 2. Probably works on other stuff too.',
+      tags: [
+        'Babylonjs',
       ]
     },
     {
