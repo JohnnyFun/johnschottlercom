@@ -3,6 +3,7 @@
   import SafeHtml from 'components/articles/code-examples/SafeHtml.txt'
   import CustomSvelteEslintPlugin from 'components/articles/code-examples/CustomSvelteEslintPlugin.txt'
   import SafeHtmlCypressTests from 'components/articles/code-examples/SafeHtmlCypressTests.txt'
+  import ReplaceHtmlWithSafeHtml from 'components/articles/code-examples/ReplaceHtmlWithSafeHtml.txt'
 </script>
 
 <h2>Summary</h2>
@@ -112,4 +113,8 @@
 
 <Code title="SafeHtml.spec.js" value={SafeHtmlCypressTests} />
 
-<p>Now, even if your backend isn't html encoding or cleaning html strings on the way into the db, your front-end should handle it just fine!</p>
+<h2>Replace usages of <kbd>@html</kbd> with <kbd>SafeHtml</kbd></h2>
+<p>If you have a larger app that's making heavy use of <kbd>@html</kbd>, you can use this script to replace those usages and also add an <kbd>import</kbd> statement accordingly.</p>
+<Code title={`Replace \{@html ...\} with SafeHtml.svelte`} value={ReplaceHtmlWithSafeHtml} />
+
+<p>There you have it. Now, even if your backend isn't html encoding or cleaning html strings on the way into the db, your front-end should handle it just fine!</p>
