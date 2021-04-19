@@ -54,6 +54,7 @@ module.exports = {
 		new CopyPlugin([
 			{ from: 'src/favicon.ico', to: resolveDist() },
 			{ from: 'src/images', to: resolveDist('images') },
+			{ from: 'src/global-css', to: resolveDist('global-css') },
 			{ from: 'src/projects', to: resolveDist('projects') },
 			{ from: 'src/textures', to: resolveDist('textures') },
 			{ from: '_redirects', to: resolveDist() } // so netflify knows to always server index.html for client-side routing to work

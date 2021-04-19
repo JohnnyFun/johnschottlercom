@@ -4,11 +4,13 @@
       <Me />
     </Panel>
   {/if}
+  <Route path="/article/:slug" component={Article} />
   <Route path="/*splat" component={Home} />
   <Route component={NotFound} />
 </main>
 
 <script>
+  import Article from 'components/Article'
   import Home from 'components/Home.svelte'
   import NotFound from 'components/NotFound.svelte'
   import { Route } from 'svelte-routing'

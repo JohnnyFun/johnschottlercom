@@ -46,6 +46,18 @@
 
   :global(h1, h2) {
     font-weight: 100;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  :global(h1) {
+    margin-bottom: 3rem;
+  }
+
+  :global(kbd) {
+    padding: 2px 5px;
+    background-color: #222;
+    border-radius: 3px;
   }
   
   :global(h2) {
@@ -53,10 +65,18 @@
   }
 
   :global(p) {
-    line-height: 2.1rem;
+    line-height: 2.5rem;
     padding:0;
     margin:0;
     margin-bottom:2rem;
+  }
+
+  :global(ul) {
+    line-height: 2.5rem;
+  }
+
+  :global(a) {
+    color: rgb(22, 119, 62);;
   }
 
   /*scrollbar styling*/

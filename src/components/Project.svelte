@@ -53,7 +53,7 @@
     background-color: var(--primary);
     color: var(--primary-text);
     border-radius: .5rem;
-    font-size: 1rem;
+    font-size: 1.3rem;
     white-space: nowrap;
     margin-bottom: 1rem;
   }

@@ -47,7 +47,7 @@
     font-size: 1.5rem;
   }
 
-  a:hover, a.active {
+  a:hover {
     border-bottom: 2px solid var(--primary-text);
   }
 

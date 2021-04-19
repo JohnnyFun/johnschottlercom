@@ -10,6 +10,7 @@
   import CodeProjects from './CodeProjects.svelte'
   import Articles from './Articles.svelte'
   import responsive from 'stores/responsive'
+  import { scrollTop } from 'services/scroll'
 
   export let splat
 
@@ -18,5 +19,5 @@
 
   $: el = mounted && splat !== '' ? document.getElementById(splat) : null
   $: if (el) el.scrollIntoView({ behavior: 'smooth' })
-  else document.getElementsByTagName('main')[0].scrollTo(0, 0)
+  else scrollTop()
 </script>
