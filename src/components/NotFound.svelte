@@ -4,7 +4,7 @@
   <Btn href="/">Home</Btn>
 </div>
 <script>
-	import Btn from 'components/Btn'
+	import Btn from 'components/Btn.svelte'
 </script>
 <style>
   div {

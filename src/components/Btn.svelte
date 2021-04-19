@@ -1,9 +1,17 @@
-<a on:click={onClickHandler} {href}><slot /></a>
+<a on:click={onClickHandler} {href}>
+  {#if icon}
+    <Icon type={icon} />
+  {/if}
+  <slot />
+</a>
 
 <script>
   import {createEventDispatcher} from 'svelte'
+  import Icon from 'components/Icon.svelte'
+
   export let href = null
   export let onClick = null
+  export let icon = null
 
   const dispatch = createEventDispatcher()
 
@@ -19,7 +27,14 @@
     text-decoration: none;
     color: var(--primary-text);
     background-color: var(--primary);
-    padding: 1rem;
+    padding: .7rem 1.5rem;
     border-radius: .3rem;
+    display: inline-block;
+    transition: all .3s;
+    margin-bottom: 1rem;
+  }
+
+  a:hover {
+    filter:brightness(1.1);
   }
 </style>

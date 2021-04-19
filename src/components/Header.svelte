@@ -1,9 +1,9 @@
 <nav>
-  <div>
-    <a class="home" href="/">John&nbsp;Schottler</a>
-  </div>
-  <div class="menu-items">
-    <a href="https://github.com/JohnnyFun" title="github" target="_blank">
+  <a class="home" href="/">John&nbsp;Schottler</a>
+  <MenuItems>
+    <a href="/hobby-projects">Projects</a>
+    <a href="/articles">Articles</a>
+    <a href="https://github.com/JohnnyFun/johnschottlercom" title="github" target="_blank">
       <Icon type="github" />
     </a>
     <a href="http://stackoverflow.com/users/3144603/johnnyfun" title="stackoverflow" target="_blank">
@@ -15,11 +15,12 @@
     <a href="https://www.facebook.com/johncschottler" title="facebook" target="_blank">
       <Icon type="facebook-square" />
     </a>
-  </div>
+  </MenuItems>
 </nav>
 
 <script>
-  import Icon from 'Icon'
+  import Icon from 'components/Icon.svelte'
+  import MenuItems from 'components/MenuItems.svelte'
 </script>
 
 <style>
@@ -39,38 +40,33 @@
     color: var(--primary-text);
     text-decoration: none;
     display: inline-block;
+    padding: 1rem;
+    transition: border-bottom 0.3s;
+    border: 2px solid transparent;
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
+
+  a:hover, a.active {
+    border-bottom: 2px solid var(--primary-text);
   }
 
   a.home {
     padding: 1rem;
-    font-size: 2rem;
-    transition: transform 0.5s;
+    margin-left: 1.4rem;
+    font-size: 1.8rem;
+    transition: transform 0.3s;
+    font-weight: 100;
   }
 
-  a.home:hover {
-    transform: scale(1.04, 1.04);
-  }
-
-  .menu-items {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-  }
-
-  .menu-items > a {
-    padding: 1rem;
-    transition: border-bottom 0.3s;
-    border: 2px solid transparent;
-  }
-
-  .menu-items > a:hover {
-    border-bottom: 2px solid var(--primary-text);
-  }
-
-  @media only screen and (max-width: 350px) {
+  @media only screen and (max-width: 450px) {
     nav {
       display: block;
       text-align: center;
+    }
+
+    a {
+      font-size: 1.3rem;
     }
   }
 </style>
