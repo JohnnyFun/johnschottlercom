@@ -111,3 +111,5 @@
 <p><img src="/images/SafeHtml-cypress-component-tests.jpg" alt="SafeHtml-cypress-component-tests.jpg" /></p>
 
 <Code title="SafeHtml.spec.js" value={SafeHtmlCypressTests} />
+
+<p>Now, even if your backend isn't html encoding or cleaning html strings on the way into the db, your front-end should handle it just fine!</p>
