@@ -1,14 +1,19 @@
-{#if article}
-  {#if loading}
-    loading...
+<div class="article">
+  {#if article}
+    {#if loading}
+      loading...
+    {:else}
+      <h1>
+        {article.title}
+        <em>{article.datePublished}</em>
+      </h1>
+      <svelte:component this={component} />
+      <p><Btn href="/articles" icon="arrow-left">Back to articles</Btn></p>
+    {/if}
   {:else}
-    <h1>{article.title}</h1>
-    <svelte:component this={component} />
-    <p><Btn href="/articles" icon="arrow-left">Back to articles</Btn></p>
+    <NotFound />
   {/if}
-{:else}
-  <NotFound />
-{/if}
+</div>
 
 <script>
   import {articles} from 'components/Articles.svelte'
@@ -36,5 +41,16 @@
 <style>
   h1 {
     text-align: center;
+  }
+
+  .article :global(h2) {
+    margin-top: 3rem;
+    color: var(--secondary-text);
+  }
+
+  em {
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
   }
 </style>

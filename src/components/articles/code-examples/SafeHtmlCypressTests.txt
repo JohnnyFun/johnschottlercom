@@ -1,0 +1,67 @@
+import SafeHtml from 'components/SafeHtml.svelte'
+import { mount } from 'cypress-svelte-unit-test'
+
+describe('InputSelect', () => {
+  beforeEach(() => cy.viewport(600, 600))
+  
+  it('prevents XSS form', () => {
+    const maliciousForm = flattenHtml(`
+      <h1>Please login again</h1>
+      <form action="https://johnschottler.com">
+        <input placeholder="username" />
+        <input placeholder="password" />
+        <button type="submit">Login</button>
+      <form>`)
+    mountSafeHtml(maliciousForm)
+    assertHtml('<h1>Please login again</h1>')
+  })
+
+  it('prevents XSS attributes', () => {
+    mountSafeHtml('<div onclick="window.injectedFromOtherVector">Boom</div>')
+    assertHtml('<div>Boom</div>')
+  })
+
+  it('prevents XSS style attribute', () => {
+    const maliciousStyling = 'position: absolute; width: 100%; height: 100%; z-index: 2000; background-color: blue; color: white;'
+    const buildContent = style => `<div style="${style}">This covers the whole page to deface your site and link to pictures of naked stuff and whatnot.</div>`
+    mountSafeHtml(buildContent(maliciousStyling))
+    assertHtml(buildContent('background-color: blue; color: white;'))
+  })
+
+  it('prevents XSS href javascript', () => {
+    mountSafeHtml(`<a href="javascript:alert('I take your data, hahahah!')">Boom</a>`)
+    assertHtml('<a>Boom</a>')
+  })
+
+  it('allows safe html', () => {
+    const safeHtml = flattenHtml(`
+      <img src="/favicon.ico">
+      <div class="text-success">I'm a div!</div>
+      <p style="color: blue;">I am p</p>
+      <ul>
+        <li>items</li>
+      </ul>
+      <a href="/my/harmless/url">Click here!</a>
+      <a href="https://johnschottler.com">Go to a different site more knowingly</a>
+      <h1>BIG</h1>
+      <em>emphasis</em>
+      <strong>strong</strong>
+      <i>italic</i>
+    `)
+    mountSafeHtml(safeHtml)
+    assertHtml(safeHtml)
+  })
+})
+
+function assertHtml(expected) {
+  cy.gettest('component-wrapper').then(safehtml => expect(flattenHtml(safehtml.html())).to.eq(expected))
+}
+
+function flattenHtml(html) {
+  // clear newlines and trim internally and externally
+  return html.replace(/\n/g, '').replace(/\s{2,}/g, ' ').trim()
+}
+
+function mountSafeHtml(value) {
+  mountSafeHtml({ props: { value } })
+}

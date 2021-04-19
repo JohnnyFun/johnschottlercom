@@ -20,6 +20,7 @@
   :global(:root) {
     --primary: rgb(11, 88, 43);
     --primary-text: #eee;
+    --secondary-text: rgb(4 138 60);
     --top-nav-height: 4.5rem;
     --left-menu-width: 25rem;
     --min-desktop-width: 1245px;
@@ -76,7 +77,7 @@
   }
 
   :global(a) {
-    color: rgb(22, 119, 62);;
+    color: var(--secondary-text);
   }
 
   /*scrollbar styling*/

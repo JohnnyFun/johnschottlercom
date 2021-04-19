@@ -1,0 +1,75 @@
+const svelteCompiler = require('svelte/compiler')
+const esLintPluginSvelte3 = require('eslint-plugin-svelte3')
+const mySiteLint = {}
+
+module.exports = {
+  processors: {
+    mySite: {
+      preprocess: (text, filename) => {
+        // first call into eslint-plugin-svelte3, then add our mySite-specific lint
+        const result = esLintPluginSvelte3.processors.svelte3.preprocess(text, filename)
+        addMySiteLint(filename, text)
+        return result
+      },
+
+      postprocess: (messages, filename) => {
+        // now we're back from js-lint, so call esling-plugin-svelte3 to ignore certain warnings that eslint came up with and then concat our mySite-specific lint
+        const jsErrorsInSvelte = esLintPluginSvelte3.processors.svelte3.postprocess(messages, filename)
+        return jsErrorsInSvelte.concat(mySiteLint[filename])
+      },
+
+      supportsAutofix: esLintPluginSvelte3.processors.svelte3.supportsAutofix
+    }
+  },
+
+  // // if you want a custom js rule (as opposed to a custom svelte), do something like this and add your rule's name to eslintrc.js like `'mySite/my-custom-js-rule': error`
+  // rules: {
+  //   'my-custom-js-rule': {
+  //     create: function (context) {
+  //       // more info: https://eslint.org/docs/developer-guide/working-with-plugins#create-a-plugin and https://eslint.org/docs/developer-guide/working-with-rules
+  //       const filename = context.getFilename()
+  //       return {
+  //         AST_NODE_TYPE_NAME(codePath, node) {
+  //           context.report({node, message: `This node is invalid!` })
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+function addMySiteLint(filename, text) {
+  mySiteLint[filename] = []
+  text = clearStyles(text)
+  const ast = svelteCompiler.parse(text)
+  svelteCompiler.walk(ast, {
+    enter(node, parent, prop, index) {
+      if (node.type === 'RawMustacheTag' && !filename.endsWith('SafeHtml.svelte')) {
+        addLintError(filename, text, node, 'no-raw-html', 'Use SafeHtml.svelte instead of {@html}')
+      }
+    }
+  })
+}
+
+function addLintError(filename, text, node, ruleId, message) {
+  const codeChunk = text.slice(node.start, node.end);
+  mySiteLint[filename].push({
+    ruleId: ruleId,
+    severity: 2,
+    message: `${message}\n\t\`${codeChunk}\``,
+    // todo: improve line/column handling--don't see anything to get line number for our
+    //       need to turn node.start/end into line numbers in original text, like eslint-plugin-svelte3
+    //       does in method`get_translation`(maps source code line numbers to indexes in the string...wouldn't be hard, but this is good nuff for now)
+    line: node?.expression?.loc?.start?.line,
+    column: node?.expression?.loc?.start?.column,
+    endLine: node?.expression?.loc?.start?.endLine,
+    endColumn: node?.expression?.loc?.start?.endColumn,
+  })
+}
+
+function clearStyles(text) {
+  // for now, skip styles for our custom lints. But if you want to lint css/scss, could pass through `svelte.config` to convert to normal css first.
+  // even eslint-plugin-svelte3 pretty much skips it currently though, so no big deal
+  // see "svelte3/ignore-styles" in our eslintrc.js--we ignore style blocks if they are scss and not just plain css
+  return text.replace(/<style(\s[^]*?)?>[^]*?<\/style>/gi, '')
+}

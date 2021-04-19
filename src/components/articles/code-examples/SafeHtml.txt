@@ -1,0 +1,65 @@
+{@html valueSafe}
+<script>
+  export let value
+
+  // add any other whitelisted items you're app will need...
+  const allowedTags = new Set(['A','B','BR','DIV','EM','H1','H2','H3','H4','H5','H6','I','IMG','LI','OL','P','SPAN','STRONG','TABLE','TBODY','TD','TH','THEAD','TR','U','UL','HEADER','SUMMARY','DETAIL'])
+  const style = 'style'
+  const href = 'href'
+  const safeAttributes = new Set(['class', 'data-test', 'src', href, 'target', style])
+  const safeHrefStarts = ['/', 'http', 'mailto:', 'tel:', '#']
+  const allowedStyleProps = new Set(['margin','marginLeft','marginTop','marginBottom','marginRight','padding','paddingLeft','paddingTop','paddingBottom','paddingRight','border','backgroundColor','color','font','fontSize','fontWeight','fontStyle','fontFamily'])
+
+  $: valueSafe = cleanHtml(value)
+
+  function cleanHtml(html) {
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    const allElements = tmp.querySelectorAll('*')
+    let i = allElements.length
+    while (i--) {
+      const element = allElements[i]
+      const tagName = element.tagName
+      if (!allowedTags.has(tagName)) {
+        log(`Html contains unallowed element ${tagName}.`)
+        element.parentElement.removeChild(element)
+        continue
+      }
+      const attributes = element.attributes
+      let j = attributes.length
+      while (j--) {
+        const attr = attributes[j]
+        const attrName = attr.name
+        if (!safeAttributes.has(attrName)) {
+          log(`Html contains unallowed attribute ${attrName}`)
+          element.removeAttribute(attrName)
+        } else if (attrName === href && !safeHrefStarts.some(s => attr.value.startsWith(s))) {
+          log(`Html contains href attribute with unallowed value ${attr.value}`)
+          element.removeAttribute(attrName)
+        } else if (attrName === style) {
+          setAllowedStylingOnly(element)
+        }
+      }
+    }
+    return tmp.innerHTML
+  }
+
+  function setAllowedStylingOnly(element) {
+    const safeStyles = {}
+    for (const key in element.style) {
+      const value = element.style[key]
+      if (value === '') continue
+      if (allowedStyleProps.has(key)) {
+        log(`Html contains style attribute with unallowed property ${key}`)
+        safeStyles[key] = value
+      }
+    }
+    element.setAttribute(style, '')
+    for (const key in safeStyles) element.style[key] = safeStyles[key]
+  }
+
+  function log(error) {
+    // eslint-disable-next-line no-console
+    console.error(`${error}. It will be stripped.`)
+  }
+</script>

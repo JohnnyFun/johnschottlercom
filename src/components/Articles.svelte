@@ -6,19 +6,21 @@
   import {slugify} from 'services/string-utils'
 
   export const articles = [
-    // {
-    //   title: 'Protect your web app from XSS with custom lint rule and whitelist html component',
-    //   tags: [
-    //     'svelte',
-    //     'xss',
-    //     'cypress',
-    //     'eslint',
-    //     'eslint-plugin-svelte3',
-    //   ],
-    //   component: () => import('components/articles/XssCustomLint.svelte')
-    // },
+    {
+      title: 'Protect your web app from XSS with custom lint rule and whitelist html component',
+      datePublished: '4/19/2021',
+      tags: [
+        'svelte',
+        'xss',
+        'cypress',
+        'eslint',
+        'eslint-plugin-svelte3',
+      ],
+      component: () => import('components/articles/XssCustomLint.svelte')
+    },
     {
       title: "Nodejs find/replace--when VSCode find/replace won't quite do the trick.",
+      datePublished: '4/18/2021',
       tags: [
         'nodejs',
       ],

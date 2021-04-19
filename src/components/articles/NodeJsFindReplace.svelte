@@ -1,5 +1,6 @@
 <script>
-  import Code from "components/Code.svelte";
+  import Code from "components/Code.svelte"
+  import NodeJsFindReplace from 'components/articles/code-examples/NodeJsFindReplace.txt'
 </script>
 
 <p>
@@ -33,69 +34,21 @@
   -->
 </p>
 
-<Code title="nodejs-find-replace.js" value={`
-  const { resolve } = require('path')
-  const { readdir, readFile, writeFile } = require('fs').promises
-  const filesToInclude = 'src'
-  main()
-
-  function find(content) {
-    return content.includes('<what you are searching for>')
-  }
-
-  function replace(fileName, content) {
-    /* go wild. add new files, make multiple replacements, 
-       parse as AST if regex won't cut it (xml/html for instance), etc.*/
-    return content.replace(/original_thing/g, 'new_thing')
-  }
-
-  function fileNameFilter(file) {
-    return file.endsWith('.svelte') || file.endsWith('.js')
-  }
-
-  async function main() {
-    const filesToIncludeDir = resolve(__dirname, '..', filesToInclude)
-    const files = await getFiles(filesToIncludeDir)
-    const filesToSearch = files.filter(fileNameFilter)
-    console.log(\`Searching \${filesToSearch.length} file(s)...\`)
-    let modifiedCount = 0
-    await Promise.all(filesToSearch.map(async file => {
-      let content = (await readFile(file)).toString()
-      if (find(content)) {
-        console.log(file)
-        content = replace(file, content)
-        await writeFile(file, content)
-        modifiedCount++
-      }
-    }))
-    console.log(\`\${modifiedCount} files were modified.\`)
-  }
-  
-  async function getFiles(dir) {
-    const dirents = await readdir(dir, { withFileTypes: true })
-    const files = await Promise.all(dirents.map((dirent) => {
-      const res = resolve(dir, dirent.name)
-      return dirent.isDirectory() ? getFiles(res) : res
-    }))
-    return Array.prototype.concat(...files)
-  }
-`} />
+<Code title="nodejs-find-replace.js" value={NodeJsFindReplace} />
 
 <p>You can setup VSCode to run a nodejs file in debug mode by adding this configuration to your <kbd>launch.json</kbd> file:</p>
 
-<Code lang="json" value={`
-  ...
-  {
-    "type": "node",
-    "request": "launch",
-    "name": "NodeJs Current File",
-    "program": "\${file}",
-    "skipFiles": [
-      "<node_internals>/**"
-    ]
-  }
-  ...
-`} />
+<Code lang="json" value={`...
+{
+  "type": "node",
+  "request": "launch",
+  "name": "NodeJs Current File",
+  "program": "\${file}",
+  "skipFiles": [
+    "<node_internals>/**"
+  ]
+}
+...`} />
 
 <p>
   Then if you select that configuration in the "Run and Debug" dropdown, you can hit 

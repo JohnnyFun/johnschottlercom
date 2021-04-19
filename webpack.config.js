@@ -47,7 +47,11 @@ module.exports = {
 					prod ? MiniCssExtractPlugin.loader : 'style-loader',
 					'css-loader'
 				]
-			}
+			},
+			{
+        test: /\.txt$/i,
+        use: 'raw-loader',
+      },
 		]
 	},
   plugins: [
