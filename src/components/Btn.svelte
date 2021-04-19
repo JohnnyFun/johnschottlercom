@@ -1,4 +1,4 @@
-<a on:click={onClickHandler} {href}>
+<a on:click={onClickHandler} {href} {target}>
   {#if icon}
     <Icon type={icon} />
   {/if}
@@ -12,6 +12,7 @@
   export let href = null
   export let onClick = null
   export let icon = null
+  export let target = null
 
   const dispatch = createEventDispatcher()
 

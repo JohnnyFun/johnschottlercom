@@ -7,6 +7,7 @@
       I write code. Feel free to look through my projects and articles here. If you find a 
       mistake, you can edit this site or create an issue on github.
     </p>
+    <Btn href="https://github.com/JohnnyFun/johnschottlercom" icon="github" target="_blank">View on github</Btn>
   </div>
 </div>
 

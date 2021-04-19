@@ -3,7 +3,7 @@
   <MenuItems>
     <a href="/hobby-projects">Projects</a>
     <a href="/articles">Articles</a>
-    <a href="https://github.com/JohnnyFun/johnschottlercom" title="github" target="_blank">
+    <a href="https://github.com/JohnnyFun" title="github" target="_blank">
       <Icon type="github" />
     </a>
     <a href="http://stackoverflow.com/users/3144603/johnnyfun" title="stackoverflow" target="_blank">
