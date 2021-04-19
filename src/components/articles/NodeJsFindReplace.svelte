@@ -4,7 +4,7 @@
 </script>
 
 <p>
-  VSCode's find replace is very nice for common scenarios, but when I needed to migrate an app with ~300-400 components 
+  VSCode's find replace is nice for common scenarios, but when I needed to migrate an app with ~300-400 components 
   from ractive.js to <a target="_blank" href="https://svelte.dev/">svelte</a>, 
   I needed more control.
 </p>
@@ -16,7 +16,7 @@
 <p>
   One of the more interesting conversions was migrating a some global dependencies to be explicitly imported. Ractive allows 
   you to have globally-available components, so you didn't have to explicitly <kbd>require</kbd> them. Svelte 
-  needed us to explicitly import them, so I needed to:
+  needed me to explicitly import them, so I needed to:
 </p>
 
 <ul>

@@ -7,7 +7,7 @@
 
   export const articles = [
     {
-      title: 'Protect your web app from XSS with custom lint rule and whitelist html component',
+      title: 'Protect your svelte app from XSS with custom lint rule and whitelisted html component',
       datePublished: '4/19/2021',
       tags: [
         'svelte',
