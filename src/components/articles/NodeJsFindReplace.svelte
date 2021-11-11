@@ -44,6 +44,7 @@
   "request": "launch",
   "name": "NodeJs Current File",
   "program": "\${file}",
+  "outFiles": [],
   "skipFiles": [
     "<node_internals>/**"
   ]

@@ -1,0 +1,13 @@
+- SQL fulltext index super slow randomly?
+  - If you need a quick potential fix for your situation, try isolating the fulltext index part of the query and loading up a temp table with IDs. 
+    Long story short, sql fulltext indexes can often end up reading a bunch of rows that they really don't need to. You might think you've helped it out by filtering on 
+    an indexed column or 2 to narrow down the results that it has to sift through. Nope. You're probably better off just keeping the query stupid simple and totally separate from the main query.
+  - If you're able to resolve your performance issues, great! Now, learn elasticsearch or the like. If you're still running into performance issues, learn elasticsearch faster...
+  
+  - You ultimately probably should use elasticsearch or some other dedicated search db engine. I'll point out more explicit reasons at the end.
+  - Firstly, I recommend you just setup elasticsearch. It's not hard, and it's pretty nice. BUT, if you're already
+  - put results of your fulltext search into a temp table. if you mix it in with more complicated queries, more rows will be read than necessary and it'll be super stupid slow for no obvious reason for random queries...
+    - link to stackoverflow guy's article going into depth why stackoverflow moved to elasticsearch and stopped using sql fti
+  - but at the end, pretty much recommend just setting up elasticsearch or the like since their search is easily scalable and designed to handle millions of rows of data very well. nice synonym, stemming, 
+
+- 
