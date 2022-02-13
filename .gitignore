@@ -1,3 +1,4 @@
 /**/node_modules/
 public/webpack-assets
 public/index.html
+public/_redirects

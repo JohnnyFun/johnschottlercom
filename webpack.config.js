@@ -14,7 +14,7 @@ module.exports = {
 	entry: './src/app.js',
 	output: {
 		path: path.resolve(__dirname, 'public/webpack-assets'),
-		publicPath: isProd ? '/webpack-assets' : '/', // dev server serves from root, but build puts into public dir in webpack-assets
+		publicPath: isProd ? '/webpack-assets/' : '/', // dev server serves from root, but build puts into public dir in webpack-assets
 		filename: '[name].[chunkhash].js' // : 'bundle.js', // dev server doesn't cache and doesn't add the hash, so we don't need it. But prod should send new hash so client doesn't need full reload to break cache
 	},
   resolve: {
