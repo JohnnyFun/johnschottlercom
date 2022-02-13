@@ -30,6 +30,6 @@
 </script>
 
 <script>
-  import Projects from "./Projects.svelte"
+  import Projects from "./ProjectsList.svelte"
   import Section from "./Section.svelte"  
 </script>

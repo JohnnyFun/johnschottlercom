@@ -4,7 +4,7 @@
   "description": "personal website",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack serve",
     "build": "cross-env NODE_ENV=production webpack"
   },
   "repository": {
@@ -18,22 +18,23 @@
   },
   "homepage": "https://github.com/JohnnyFun/johnschottlercom#readme",
   "devDependencies": {
-    "copy-webpack-plugin": "^5.1.2",
+    "copy-webpack-plugin": "^10.2.4",
     "cross-env": "^7.0.3",
-    "css-loader": "^3.6.0",
-    "html-webpack-plugin": "^4.5.2",
-    "mini-css-extract-plugin": "^0.9.0",
+    "css-loader": "^6.6.0",
+    "html-webpack-harddisk-plugin": "^2.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.5.3",
     "raw-loader": "^4.0.2",
-    "style-loader": "^1.3.0",
-    "svelte": "^3.35.0",
-    "svelte-loader": "^2.13.6",
-    "svelte-routing": "^1.5.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2",
+    "style-loader": "^3.3.1",
+    "svelte": "^3.46.4",
+    "svelte-loader": "^3.1.2",
+    "svelte-routing": "^1.6.0",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "highlight.js": "^10.7.2"
+    "highlight.js": "^11.4.0"
   }
 }

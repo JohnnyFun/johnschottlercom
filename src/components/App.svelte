@@ -1,14 +1,18 @@
 <div use:links>
   <Router>
-    <Header />
-    <Main />
+    <Route>
+      <Header />
+      <Main />
+    </Route>
+    <Route path="/project/:slug" component={Project} />
   </Router>
 </div>
 
 <script>
 	import Main from 'components/Main.svelte'
+	import Project from 'components/Project.svelte'
 	import Header from 'components/Header.svelte'
-  import { Router, links } from 'svelte-routing'
+  import { Router, links, Route } from 'svelte-routing'
 </script>
 
 <style>

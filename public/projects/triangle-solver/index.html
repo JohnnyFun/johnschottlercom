@@ -1,4 +1,18 @@
-﻿<div class="inputs well">
+<!doctype html>
+<html>
+<head>
+    <title>Triangle Time!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="bower_components/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/all.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+<div id="triangleTemplate"></div>
+<div id="message"></div>
+    <!--Inline template so we can open this up with the file system--ajax doesn't work so hot if you open up the html file directly-->
+<script type="text/ractive" id="triangleTemplateRactive">
+    <div class="inputs well">
     <a href="#" on-click="collapseToggle" class="glyphicon glyphicon-chevron-{{#if collapsed}}down{{else}}up{{/if}}"></a>
     {{#if !collapsed}}
     <div id="formcontainer">
@@ -30,7 +44,7 @@
             <div><label for="a3">A3&nbsp;</label><input type="number" step="any" min="0" placeholder="Angle 3" value="{{a3}}" id="a3"/>
             </div>
             <div class="actions">
-                <button type="submit" class="btn btn-primary">Solve That Shit!</button>
+                <button type="submit" class="btn btn-primary">Solve and display</button>
                 <button type="button" class="btn" on-click="clear">Clear</button>
             </div>
         </form>
@@ -80,3 +94,20 @@
     {{/with}}
 </svg>
 {{/if}}
+</script>
+
+<script src="js/polyfills.js"></script>
+<script src="js/helpers.js"></script>
+<script src="js/solve.js"></script>
+<script src="bower_components/ractive.min.js"></script>
+<script src="bower_components/jquery.min.js"></script>
+
+<script src="js/draw.js"></script>
+
+<!--testing: uncomment out these scripts to run unit tests too-->
+<!--<script src="tests/helpersTests.js"></script>
+<script src="tests/solveTests.js"></script>
+<script src="tests/drawTests.js"></script>
+<script src="tests/unittester.js"></script>-->
+</body>
+</html>

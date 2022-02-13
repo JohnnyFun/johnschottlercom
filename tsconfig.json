@@ -5,8 +5,8 @@ https://code.visualstudio.com/docs/languages/jsconfig
 */
 {
 	"compilerOptions": {
-		"allowJs": true,
-		"baseUrl": ".",
+		"allowJs": true, // basically makes it a jsconfig.json file
+		"baseUrl": "./",
 		"target": "esnext",
 		"moduleResolution": "node",
 		"traceResolution": true,
@@ -14,9 +14,11 @@ https://code.visualstudio.com/docs/languages/jsconfig
 			"*": [
 				"./src/*"
 			]
-		}
+		},
+		"noEmit": true
 	},
 	"include": [
 		"./src"
-	]
+	],
+	"exclude": ["./node_modules"]
 }

@@ -1,31 +1,33 @@
 // based on https://github.com/sveltejs/template-webpack
 // no babel, so only works in modern browsers, which is fine
 const mode = process.env.NODE_ENV || 'development'
+const isProd = mode === 'production'
 console.log(`----------------------\nBuilding client in ${mode} mode\n----------------------`)
 const prod = mode === 'production'
 const path = require('path')
-const resolveClient = relativePath => path.resolve('./src', relativePath || '.')
-const resolveDist = relativePath => path.resolve('./dist', relativePath || '.')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
-const WriteFilePlugin = require('write-file-webpack-plugin')
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin') // not sure why won't work without this...but whatever
 
 module.exports = {
 	mode,
-	entry: resolveClient('main.js'),
+	entry: './src/app.js',
 	output: {
-		path: resolveDist(),
-		filename: '[name].[hash].js',
+		path: path.resolve(__dirname, 'public/webpack-assets'),
 		publicPath: '/',
+		filename: '[name].[hash].js' // : 'bundle.js', // dev server doesn't cache and doesn't add the hash, so we don't need it. But prod should send new hash so client doesn't need full reload to break cache
 	},
   resolve: {
 		extensions: ['.mjs', '.js', '.svelte'],
+		fallback: {
+			// so ammo.js works: https://doc.babylonjs.com/divingDeeper/developWithBjs/treeShaking#ammo
+			'fs': false,
+			'path': false,
+		},
     mainFields: ['svelte', 'browser', 'module', 'main'],
     modules: [
-			resolveClient(), 
-			path.resolve('./src'),
-			'node_modules'
+			path.resolve(__dirname, 'src'),
+			'node_modules',
 		]
   },
   module: {
@@ -55,32 +57,24 @@ module.exports = {
 		]
 	},
   plugins: [
-		new CopyPlugin([
-			{ from: 'src/favicon.ico', to: resolveDist() },
-			{ from: 'src/images', to: resolveDist('images') },
-			{ from: 'src/global-css', to: resolveDist('global-css') },
-			{ from: 'src/projects', to: resolveDist('projects') },
-			{ from: 'src/textures', to: resolveDist('textures') },
-			{ from: '_redirects', to: resolveDist() } // so netflify knows to always server index.html for client-side routing to work
-		]),
-		// copy the favicon and images during dev too
-		new WriteFilePlugin({
-				useHashIndex: true
-		}),
 		new MiniCssExtractPlugin({
 			filename: '[name].[chunkhash].css'
 		}),
 		new HtmlWebpackPlugin({
 			// https://github.com/jantimon/html-webpack-plugin#options
-			template: resolveClient('index.html')
-		})
+			template: path.resolve(__dirname, './src/index-template.html'),
+			filename: path.resolve(__dirname, './public/index.html'),
+			alwaysWriteToDisk: true,
+		}),
+		new HtmlWebpackHarddiskPlugin(), // not sure why won't work without this...but whatever
 	],
-	devtool: prod ? false: 'source-map',
 	devServer: {
 		https: true,
-		contentBase: resolveDist(),
-		hot: false,
-		disableHostCheck: true,
-		historyApiFallback: true
+		port: 8080,
+		// always send index.html for client-side routes
+		historyApiFallback: true,
+		static: {
+			directory: path.resolve(__dirname, 'public'), // tells webpack to serve from the public folder
+		},
 	}
 }

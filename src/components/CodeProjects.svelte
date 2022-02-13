@@ -1,9 +1,9 @@
 <Section title="Hobby projects">
-  <Projects {projects} />
+  <ProjectsList {projects} />
 </Section>
 
 <script>
-  import Projects from "./Projects.svelte"
+  import ProjectsList from "./ProjectsList.svelte"
   import Section from "./Section.svelte"
 
   const projects = [

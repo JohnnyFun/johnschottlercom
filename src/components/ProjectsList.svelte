@@ -1,13 +1,13 @@
 {#if projects}
   <div class="projects">
     {#each projects as project}
-      <Project {project} />
+      <ProjectCard {project} />
     {/each}
   </div>
 {/if}
 
 <script>
-  import Project from "./Project.svelte"
+  import ProjectCard from './ProjectCard.svelte'
 
   export let projects
 </script>
