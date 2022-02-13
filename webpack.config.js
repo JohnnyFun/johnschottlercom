@@ -70,7 +70,7 @@ module.exports = {
 	],
 	devServer: {
 		https: true,
-		port: 8080,
+		port: 3000,
 		// always send index.html for client-side routes
 		historyApiFallback: true,
 		static: {

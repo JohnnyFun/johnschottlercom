@@ -1,18 +1,23 @@
-<div use:links>
+<div id="app-router" use:links>
   <Router>
     <Route>
       <Header />
       <Main />
     </Route>
-    <Route path="/project/:slug" component={Project} />
+    {#each projects as project}
+      {#if project.component}
+        <LazyRoute path={project.href} component={project.component} />
+      {/if}
+    {/each}
   </Router>
 </div>
 
 <script>
 	import Main from 'components/Main.svelte'
-	import Project from 'components/Project.svelte'
 	import Header from 'components/Header.svelte'
   import { Router, links, Route } from 'svelte-routing'
+  import { projects } from './CodeProjects.svelte'
+  import LazyRoute from './LazyRoute.svelte'
 </script>
 
 <style>
@@ -36,17 +41,24 @@
     }
   }
 
+  :global(html, body, #app), #app-router {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
   :global(html) {
     font-size: 10px; /*so that 1rem === 10px*/
   }
-
+  
   :global(body) {
-    font-family: Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* font-family: Helvetica, sans-serif; */
     font-size: 1.6rem;
     background-color: #2d2b2b;
     color: #ddd;
-    margin: 0;
-    padding: 0;
   }
 
   :global(h1, h2) {
