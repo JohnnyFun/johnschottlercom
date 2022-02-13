@@ -15,7 +15,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'public/webpack-assets'),
 		publicPath: '/',
-		filename: '[name].[hash].js' // : 'bundle.js', // dev server doesn't cache and doesn't add the hash, so we don't need it. But prod should send new hash so client doesn't need full reload to break cache
+		filename: '[name].[chunkhash].js' // : 'bundle.js', // dev server doesn't cache and doesn't add the hash, so we don't need it. But prod should send new hash so client doesn't need full reload to break cache
 	},
   resolve: {
 		extensions: ['.mjs', '.js', '.svelte'],
