@@ -4,6 +4,7 @@
       <Header />
       <Main />
     </Route>
+    <!--TODO: convert article lazy load stuff to use this paradigm too-->
     {#each projects as project}
       {#if project.component}
         <LazyRoute path={project.href} component={project.component} />
