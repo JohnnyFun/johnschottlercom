@@ -1,2 +1,3 @@
 /**/node_modules/
-/**/public/webpack-assets
+public/webpack-assets
+public/index.html
