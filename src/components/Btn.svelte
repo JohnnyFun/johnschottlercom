@@ -37,5 +37,6 @@
 
   a:hover {
     filter:brightness(1.1);
+    cursor: pointer;
   }
 </style>
