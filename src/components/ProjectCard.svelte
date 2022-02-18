@@ -28,6 +28,7 @@
     border-radius: 4px;
     transition: all .3s;
     width: 25rem;
+    background-color: #222;
   }
 
   .desc {
@@ -38,6 +39,7 @@
 
   a:hover {
     transform: translateY(-.5rem);
+    /* transform: scale(1.2); */
     box-shadow: 0rem 0rem 3rem .5rem #222;
   }
 
