@@ -34,7 +34,7 @@
       title: 'Tic tac toe',
       href: 'projects/tic-tac-toe/index.html',
       openNewTab: true,
-      desc: 'A course I went through used tic-tac-toe to show basic concepts of machine learning. The instructor built it at the command line in python, but I built a GUI in html,css,js instead. I also played with different reward/learning approaches.',
+      desc: 'The trick is that you don\'t get to go first. A course I went through used tic-tac-toe to show basic concepts of reinforcement learning algorithms. The instructor built it at the command line in python, but I built a GUI in html, css, and js instead. I also played with different reward/learning approaches. It learned to keep its opponent alive as long as possible if I gave it too much reward for merely not losing, so I had to tweak it so it would go for the kill ASAP.',
       tags: [
         'Machine Learning',
         'Reinforcement Learning'
