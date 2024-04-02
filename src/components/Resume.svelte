@@ -32,6 +32,7 @@
     'Reviewed and merged pull requests',
     'Implemented main error handling pipeline in the app that ultimately sent unhandled exceptions to Azure. Created script to report application bugs in Slack channel, filtering out known-non-issue bugs, linking to more details in azure.',
     'Helped to monitor and fix bugs reported by our internal support and external customers',
+    'Kept eyes peeled for security threats like XSS, SQL injection, etc. Mentored younger devs in this area.',
     'Handled many deployments to demo, staging, and prod',
   ]} />
   <ResumeExperience title="Software Engineer III" company="AssureSign" when="Jul 2016 - Mar 2018 · 1 yr 9 mos" duties={[
@@ -44,6 +45,7 @@
     'Helped implement some of their later API endpoints and their new app\'s front-end which used the new API.',
     'Introduced some automated testing into their app, which had very few automated tests when I started there.',
     'Deployed to demo and prod environments periodically',
+    'Helped keep the sensitive data in signed documents secure. Did periodic security trainings that included OWASP coding trainings where we\'d fix various egregious security holes in simple fake apps.'
   ]} />
   <ResumeExperience title=".Net and JavaScript Developer" company="Nerdery" when="Jul 2014 - Jul 2015 · 1 yr 1 mo" duties={[
     'Implemented some features on an app for Rockwell Automation that ultimately would allow people to build machines using parts that were compatible with each other. It used .Net MVC, Angular 1.x, MS SQL Server',

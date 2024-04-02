@@ -1,7 +1,7 @@
 <Section title="Articles">
   <Projects projects={articles} />
 
-  <div class="not-many">Yeah...not many articles</div>
+  <div class="not-many">Yeah...not many articles currently</div>
 </Section>
 
 <script context="module">
