@@ -4,7 +4,6 @@
       <Header />
       <Main />
     </Route>
-    <!--TODO: convert article lazy load stuff to use this paradigm too-->
     {#each projects as project}
       {#if project.component}
         <LazyRoute path={project.href} component={project.component} />
@@ -58,7 +57,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     /* font-family: Helvetica, sans-serif; */
     font-size: 1.6rem;
-    background-color: #2d2b2b;
+    background-color: #1c1c1c;
     color: #ddd;
   }
 

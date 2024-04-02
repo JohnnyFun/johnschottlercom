@@ -10,17 +10,6 @@
 <script context="module">
   export const projects = [
     {
-     title: 'Tank beach party',
-     href: 'projects/tank-beach-party',
-     component: () => import('components/projects/tank-beach-party/TankBeachParty.svelte'),
-     desc: 'Make party, not war.',
-     tags: [
-       'Babylonjs',
-       'Ammojs',
-       'svelte',
-     ]
-   },
-    {
       title: 'Dirtball',
       href: 'projects/dirtball/index.html',
       openNewTab: true,
@@ -30,6 +19,17 @@
         'Cannonjs',
       ]
     },
+    {
+     title: 'Tank beach party',
+     href: 'projects/tank-beach-party',
+     component: () => import('components/projects/tank-beach-party/TankBeachParty.svelte'),
+     desc: 'Make party, not war. Lots of bugs and unfinished features, but pretty entertaining.',
+     tags: [
+       'Babylonjs',
+       'Ammojs',
+       'svelte',
+     ]
+   },
     {
       title: 'Tic tac toe',
       href: 'projects/tic-tac-toe/index.html',

@@ -14,7 +14,8 @@
     margin-bottom: 2rem;
     padding-bottom: 2rem;
   }
-  h2{
+
+  h2 {
     text-align:center;
   }
 </style>

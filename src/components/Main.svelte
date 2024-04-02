@@ -3,22 +3,27 @@
     <Panel>
       <Me />
     </Panel>
+  {:else}
+    <Me />
   {/if}
   <Router>
+    <Route component={Home} />
+    <Route path="/hobby-projects" component={Home} />
+    <Route path="/articles" component={Articles} />
     <Route path="/article/:slug" component={Article} />
-    <Route path="/*splat" component={Home} />
-    <Route component={NotFound} />
+    <Route path="/resume" component={Resume} />
   </Router>
 </main>
 
 <script>
   import Article from 'components/Article.svelte'
   import Home from 'components/Home.svelte'
-  import NotFound from 'components/NotFound.svelte'
   import { Route, Router } from 'svelte-routing'
   import Me from './Me.svelte'
   import Panel from './Panel.svelte'
   import responsive from 'stores/responsive'
+  import Resume from './Resume.svelte'
+  import Articles from './Articles.svelte'
 </script>
 
 <style>

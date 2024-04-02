@@ -1,8 +1,9 @@
-<nav>
+<nav on:click={scrollMainTopIfChangingPage}>
   <a class="home" href="/">John&nbsp;Schottler</a>
   <MenuItems>
     <a href="/hobby-projects">Projects</a>
     <a href="/articles">Articles</a>
+    <a href="/resume">Résumé</a>
     <a href="https://github.com/JohnnyFun" title="github" target="_blank">
       <Icon type="github" />
     </a>
@@ -21,6 +22,11 @@
 <script>
   import Icon from 'components/Icon.svelte'
   import MenuItems from 'components/MenuItems.svelte'
+
+  function scrollMainTopIfChangingPage(e) {
+    const isMenuAnchor = e.target.tagName.toLowerCase() === 'a'
+    if (isMenuAnchor) document.getElementsByTagName('main')[0].scrollTo(0,0)
+  }
 </script>
 
 <style>
@@ -59,7 +65,7 @@
     font-weight: 100;
   }
 
-  @media only screen and (max-width: 450px) {
+  @media only screen and (max-width: 580px) {
     nav {
       display: block;
       text-align: center;
