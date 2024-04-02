@@ -1,4 +1,4 @@
-<div class="experience">
+<div class="experience" class:last>
   <h4>{title}</h4>
   <h5>{company}</h5>
   <p class="when">{when}</p>
@@ -14,6 +14,7 @@
   export let company
   export let when
   export let duties
+  export let last = false
 </script>
 
 <style>
@@ -21,6 +22,9 @@
     border-bottom: 1px solid #666;
     padding-bottom: 20px;
     margin-bottom: 20px;
+  }
+  .experience.last {
+    border-bottom: none;
   }
   h4, h5, p {
     margin: 0;

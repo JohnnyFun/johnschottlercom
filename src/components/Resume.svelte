@@ -61,7 +61,7 @@
     'Used various external APIs to interact with hotel related data and book hotels',
     'Implemented uinit tests to prevent regression',
     'Worked with contract designer and UX people to implement features',
-  ]} />
+  ]} last />
 </div>
 
 <script>
