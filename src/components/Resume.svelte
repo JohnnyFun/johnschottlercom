@@ -17,6 +17,7 @@
   </table>
   <h2>Professional Experience</h2>
   <ResumeExperience title="Software Engineer" company="Clinician Nexus" when="Mar 2018 - Feb 2024 · 6yrs" duties={[
+    'Early employee, created lots of major infrastructure. Eventually acquired',
     'Built out infrastructure for E2E and API testing, which kept the app very stable as we added lots of new features and fixed bugs. Found and POC\'d cypress.io and built custom code to generate insert scripts to seed the database for a test. Added ability to regenerating those insert scripts when schema and data migrations happened.',
     'Kept performance stable as we grew. Nightly index and stats management script. Re-designed indexes and queries periodically as schema and data changed. Implemented infinite scrolling or pagination in many places. Implemented API rate limiting.',
     'Modernized the app\'s client-side infrastructure. Refactored from Ractive.js to Svelte.js--used lots of regex and abstract syntax trees to reduce manual work and increase consistency. Automated tests helped guide this effort.',
