@@ -1,0 +1,62 @@
+- end goal: 
+  - some kind of GAN to generate something fun
+    - maybe like that site that allows you to draw a start point and then it fills in details to make it more realistic
+      - so instead of starting the generator network with random noise, use what the person inputs
+      - they draw a cartoonish man, and the generator makes it look more realistic, for instance
+  - be able to run the model forward in js, so can hoste it on my site
+    - tensorflowjs or the like--probably others these days :shrug:
+    - maybe put the work on a webworker, depending on speed
+      - but might be fine to just show a spinner and set into a separate event loop in a setTimeout...
+      - tensorflowjs maybe already makes use of webworkers too behind the scenes :shrug:
+      - related: tensorflowjs probably uses webgl or webgpu to do the work with the GPU instead of CPU, but read about it if slow...
+
+- general notes about GANs
+  - source: https://towardsdatascience.com/generative-adversarial-network-gan-for-dummies-a-step-by-step-tutorial-fdefff170391
+    - and https://developers.google.com/machine-learning/gan/generative
+  - one type of generative model  
+  - unsupervised learning!
+    - the discriminator is a supervised classifier...
+      - it's input is labeled data (fake and not fake examples)
+    - but the generator is learning the realistic space of possible [thing]s that it's learning to generate.
+      - e.g. when generating fake images of human faces, it learns that all pixels set to red does not make something that looks like a human face.
+      - it's input is not labeled data--it's just unlabeled random noise.
+        - it's weights gradually learn some restricted space in high dimensional space that represents possibilities of what it's trying to generate.
+  - 3 parts
+    - generative network
+      - starts out not knowing anything about how to generate goblin pictures
+    - samples of what we want the network to generate
+      - e.g. pictures of goblins for a network that will learn how to generate goblins
+    - discriminator network
+      - starts out not knowing anything about how to determine if its input is generated or real 
+  - process
+    - feed noise to the generator as start point
+    - feed it forward and get the output
+    - pass the output into the discriminator network and get _its_ percentage of certainty that it's real
+    - back propagate only the network that was wrong, not both
+      - so that one network doesn't get way better than the other and cause the worse network to get "stuck"
+        - e.g. a really good discriminator gives the generator no examples of where it got better and vice versa
+        - so to prevent...you might find that you need to stop back propagating for a while to one? Not sure...
+        - the 2 networks kind of take turns getting incrementally better...
+          - I feel like there's a better way to do this though--like back propagate both until you have too long of a streak where one has been correct, then spend a few rounds back propagating that one to get it back in the game
+            - pretty similar to what they do, but I think my approach would be slightly more parallel vs synchronous
+      - ultimate goal: optimize so that the generator is totally unsure--i.e. get it to be 50% certainty 80-100% of the time or so
+    - then do same thing with a real image and repeat...
+  - some implementation details
+    - add the discriminator after the generator
+    - 
+
+- TODO:
+  - first just follow along with a tutorial to get the basic environment/libraries setup and understood at a high level
+    - keras, tensorflow, pytorch installed and running
+    - train the model
+    - test the generator
+  - THEN, modify it to do something similar, but different enough that you need to go a bit deeper in understanding how it all works
+  - THEN, go deeper into each line of code and the reasoning behind it
+    - convolutional neural networks, in particular
+      - take a more formal class on these, like fastai etc. or coursera (they just came out with new classes)
+      - I understand normal neural networks and backpropagation pretty well, but only have kind of surface level understanding of CNNs
+
+- you already have a lot of relevant knowledge from web app development
+  - db tuning
+  - making front-ends to display things intuitively
+  - code quality/readability/source control

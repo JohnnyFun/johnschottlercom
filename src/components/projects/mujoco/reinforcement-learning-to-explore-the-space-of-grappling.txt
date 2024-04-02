@@ -1,0 +1,57 @@
+- high level idea
+  - use re-inforcement learning to discover novel grappling techniques
+- strategy
+  - MuJoCo to create an environment with humanoid 2 agents
+    - biological muscles can be modeled in MuJoCo
+  - Make the agents grapple each other and win by submission only, not competition points
+    - submissions include
+      - blood chokes: squeezing both sides of neck to block blood to brain for 6-8sec
+      - joint locks: applying leverage to a joint in a direction it's not supposed to move with sufficient force
+- troubles
+  - making a realistic enough environment...
+    - friction with grips
+      - gi/no gi grips :shrug:
+  
+
+- Steps
+  - c/c++ development setup in vscode to be able to run samples in MuJoCo folder
+  - run the basic sample
+  - run the simulate sample
+  - explore their code to determine how to programmatically interface with the environment...
+  - find or make a humanoid with biological muscle joints and programmatically move it
+  - duplicate the humanoid, name them agent1 and agent2
+  - CHECKPOINT: now you have a basic environment in which to do RL...
+  - success, pretty much. found that they have python wrapper for mujoco and also gym which has a few mujoco environments, including a humanoid!
+  - so plan now is...
+  - start with an existing environment/agent or modify an existing one
+    - high-quality models for the MuJoCo physics engine, curated by DeepMind: https://github.com/deepmind/mujoco_menagerie?utm_source=github&utm_medium=tweet&utm_campaign=research
+    - but probably use their mujoco gym humanoid environment as a startpoint after getting the half cheetah or a simpler environment working with a decent, but fast RL algorithm
+      - maybe even use the one from that course on udemy that you took--could just redo the course and then apply the algorithm to a few other environments to increase depth of understanding
+    - regardless, implement a custom gym environment: https://www.gymlibrary.dev/content/environment_creation/
+      - some simple examples in this repo: https://github.com/Farama-Foundation/gym-examples
+  - started project in c:\dev\python-mujoco-samples
+    - got some environments running just using sample actions without an actual policy driving them (i.e. an RL algorithm)
+    - after implementing RL for some basic ones, consider taking a deeper dive into RL via a course...but on the other hand, maybe best to just have a go at a more real world problem and learn stuff on a need to know basis as you go.
+
+- Sub goals to work toward:
+  - Refresh half cheetah and use the algorithm against another environment, like space lander and maybe a few others...
+  - make your own environment/game
+    - maybe hook up dirt ball to be an environment somehow? Would just need to make a gymn-like api around the game controls and then use the algorithm to control the ball accordingly with WASDF and work toward the 3d point on the map!!
+      - probably dumb the env down a lot though for training--no textures, etc...the thing runs pretty slow on laptop for instance and seems to consume more resources than it should...
+      - but worst case scenario, just train it overnight and confirm it works
+    - else, make a fresh, simple game, ideally 2 player and make it get really good at it
+    - this will build deeper knowledge of what makes a good environment, agent, and RL algorithm. 
+      - will also give an idea of how long it takes to train an environment depending on the complexity.
+        - so you can try RL algorithms against various environments, starting with simple ones and work your way up and see how they perform
+  - at this point, I should have a decent idea of what it'd take to make a jiu jitsu/grappling environment with 2 agents...
+    - just start simple at first
+      - if agent is able to touch both sides of the other agent's neck cylinder, he wins
+        - with a combo of his (or his opponent's) legs, head, hands, arms, etc
+        - just put two button meshes on the agents' necks that when both are touched, it simply counts as a win
+          - obviously not realistic, but will get the general idea in place and can build from there...
+    - then increase complexity of the win characteristics
+      - have to hold that position for 6sec with the other agent being unable to escape!
+      - both agents have same strength in each of their biological muscles (remember: biological muscles can be modeled in mujoco!)
+        - experiment with differing strength too--see if they find some good techniques for small guy against big guy!
+      
+

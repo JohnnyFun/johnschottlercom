@@ -1,0 +1,4 @@
+- fly around as jetpack boy 
+  - vr game where your hands have the oculus controllers in them (the default--can change later if want)
+  - pulling right trigger turns on thrusters by how much you have the trigger pulled
+    - pushes you in the direction they're facing

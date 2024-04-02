@@ -64,6 +64,7 @@
   let bullets
   let tankMaterial
   let deadTankMaterial
+  let ground
   
   const controls = [
     ['W, A, S, D', 'Drive tank'],
@@ -325,9 +326,18 @@
     // when bullet collides with a tank, it should explode
     bullet.physicsImpostor.registerOnPhysicsCollide(Object.keys(tanks).map(name => tanks[name].body.physicsImpostor), (collider, collidedWith) => {
       setTimeout(() => collider.object.dispose(), 500) // wait a bit before removing bullet, so it can bounce off tank
-      // could use the bullet's angular velocity to influence the direction the tank explodes toward, but this is good enough for now
-      blowUpTank(tanks[collidedWith.object.name])
+      // if (!collider.object.innert) {
+        // could use the bullet's angular velocity to influence the direction the tank explodes toward, but this is good enough for now
+        blowUpTank(tanks[collidedWith.object.name])
+      // }
     })
+
+    // // when bullet collides with the ground, it should explode
+    // bullet.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, (collider, collidedWith) => {
+    //   // setTimeout(() => collider.object.dispose(), 500) // wait a bit before removing bullet, so it can bounce off ground
+    //   // TODO: probably make bullet explode to cue player that they need to drop it onto the tank.
+    //   collider.object.innert = true
+    // })
 
     // setTimeout(() => bullet.dispose(), 30000) // instead wait til it's been stopped for a while or is below some y coord _and_ it's not already disposed/null
   }
@@ -407,7 +417,7 @@
     // ground.material = groundMaterial
     // ground.position.y = -.1
 
-    const ground = MeshBuilder.CreateBox('ground', {
+    ground = MeshBuilder.CreateBox('ground', {
       width: arenaSize,
       depth: arenaSize,
       height: 1,
