@@ -13,9 +13,6 @@
     <a href="https://www.linkedin.com/in/john-schottler-8b353235" title="linkedin" target="_blank">
       <Icon type="linkedin-square" />
     </a>
-    <a href="https://www.facebook.com/johncschottler" title="facebook" target="_blank">
-      <Icon type="facebook-square" />
-    </a>
   </MenuItems>
 </nav>
 
@@ -65,7 +62,7 @@
     font-weight: 100;
   }
 
-  @media only screen and (max-width: 580px) {
+  @media only screen and (max-width: 550px) {
     nav {
       display: block;
       text-align: center;
