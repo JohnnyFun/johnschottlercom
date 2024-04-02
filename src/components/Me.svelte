@@ -4,7 +4,7 @@
   </div>
   <div class="bio">
     <p>
-      Hi, I code. Enjoy.
+      Hi, I write code.
     </p>
     <Btn href="https://github.com/JohnnyFun/johnschottlercom" icon="github" target="_blank">Edit on github</Btn>
   </div>
