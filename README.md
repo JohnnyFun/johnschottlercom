@@ -5,6 +5,8 @@
 
 # Tech
 
+- to deploy, push to master and netlify will build and deploy it
+  - login to netlify to see build status
 - static website, no server side code anymore
 - svelte so nice
 - favicon made with http://www.faviconer.com/
