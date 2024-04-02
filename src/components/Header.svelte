@@ -1,16 +1,16 @@
-<nav on:click={scrollMainTopIfChangingPage}>
-  <a class="home" href="/">John&nbsp;Schottler</a>
+<nav>
+  <a on:click={scrollMainTop} class="home" href="/">John&nbsp;Schottler</a>
   <MenuItems>
-    <a href="/hobby-projects">Projects</a>
-    <a href="/articles">Articles</a>
-    <a href="/resume">Résumé</a>
-    <a href="https://github.com/JohnnyFun" title="github" target="_blank">
+    <a on:click={scrollMainTop} href="/hobby-projects">Projects</a>
+    <a on:click={scrollMainTop} href="/articles">Articles</a>
+    <a on:click={scrollMainTop} href="/resume">Résumé</a>
+    <a on:click={scrollMainTop} href="https://github.com/JohnnyFun" title="github" target="_blank">
       <Icon type="github" />
     </a>
-    <a href="http://stackoverflow.com/users/3144603/johnnyfun" title="stackoverflow" target="_blank">
+    <a on:click={scrollMainTop} href="http://stackoverflow.com/users/3144603/johnnyfun" title="stackoverflow" target="_blank">
       <Icon type="stack-overflow" />
     </a>
-    <a href="https://www.linkedin.com/in/john-schottler-8b353235" title="linkedin" target="_blank">
+    <a on:click={scrollMainTop} href="https://www.linkedin.com/in/john-schottler-8b353235" title="linkedin" target="_blank">
       <Icon type="linkedin-square" />
     </a>
   </MenuItems>
@@ -20,9 +20,8 @@
   import Icon from 'components/Icon.svelte'
   import MenuItems from 'components/MenuItems.svelte'
 
-  function scrollMainTopIfChangingPage(e) {
-    const isMenuAnchor = e.target.tagName.toLowerCase() === 'a'
-    if (isMenuAnchor) document.getElementsByTagName('main')[0].scrollTo(0,0)
+  function scrollMainTop(e) {
+    document.getElementsByTagName('main')[0].scrollTo(0,0)
   }
 </script>
 
