@@ -57,7 +57,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     /* font-family: Helvetica, sans-serif; */
     font-size: 1.6rem;
-    background-color: #1c1c1c;
+    background-color: #000;
     color: #ddd;
   }
 

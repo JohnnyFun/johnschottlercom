@@ -8,7 +8,7 @@
     width: var(--left-menu-width);
     right:0;
     z-index: 100;
-    background-color: #222;
+    background-color: #000;
     bottom:0;
     top:var(--top-nav-height);
   }
