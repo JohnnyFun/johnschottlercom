@@ -1,9 +1,10 @@
 <nav>
   <a on:click={scrollMainTop} class="home" href="/">John&nbsp;Schottler</a>
   <MenuItems>
-    <a on:click={scrollMainTop} href="/hobby-projects">Projects</a>
+    <a on:click={scrollMainTop} href="/projects">Projects</a>
     <a on:click={scrollMainTop} href="/articles">Articles</a>
     <a on:click={scrollMainTop} href="/resume">Résumé</a>
+    <a on:click={scrollMainTop} href="/about-me">About me</a>
     <a on:click={scrollMainTop} href="https://github.com/JohnnyFun" title="github" target="_blank">
       <Icon type="github" />
     </a>
@@ -61,7 +62,7 @@
     font-weight: 100;
   }
 
-  @media only screen and (max-width: 550px) {
+  @media only screen and (max-width: 650px) {
     nav {
       display: block;
       text-align: center;
