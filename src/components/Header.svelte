@@ -42,8 +42,4 @@
       text-align: center;
     }
   }
-
-  @media only screen and (max-width: 430px) {
-    
-  }
 </style>
