@@ -66,27 +66,6 @@
     'Worked with contract designer and UX people to implement features',
     'Deployed code, monitored/fixed bugs',
   ]} last />
-  <!-- <h2>Personal hobbies/interests</h2>
-  <ul>
-    <li>
-      Primary hobbies that I consistently put effort into currently
-      <ul>
-        <li>Blue belt jiu jitsu</li>
-        <li>Learning Spanish. Currently B1, goal B2 slowly, but surely.</li>
-      </ul>
-    </li>
-    <li>
-      Casual interests that I do less frequently
-      <ul>
-        <li>Tour biking</li>
-        <li>Rock climbing</li>
-        <li>Hiking</li>
-        <li>Guitar playing</li>
-      </ul>
-    </li>
-    <li>Surfing</li>
-    <li>Snowboarding/skiing</li>
-  </ul> -->
 </div>
 
 <script>

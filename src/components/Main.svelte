@@ -15,7 +15,7 @@
   import Resume from './Resume.svelte'
   import Articles from './Articles.svelte'
   import AboutMe from './AboutMe.svelte'
-  import CodeProjects from './CodeProjects.svelte';
+  import CodeProjects from './CodeProjects.svelte'
 </script>
 
 <style>
