@@ -1,29 +1,26 @@
 <nav>
-  <a on:click={scrollMainTop} class="home" href="/">John&nbsp;Schottler</a>
+  <HeaderLink href="/" home>John&nbsp;Schottler</HeaderLink>
+  {#if thin}
+    <ExternalLinks />
+  {/if}
   <MenuItems>
-    <a on:click={scrollMainTop} href="/projects">Projects</a>
-    <a on:click={scrollMainTop} href="/articles">Articles</a>
-    <a on:click={scrollMainTop} href="/resume">Résumé</a>
-    <a on:click={scrollMainTop} href="/about-me">About me</a>
-    <a on:click={scrollMainTop} href="https://github.com/JohnnyFun" title="github" target="_blank">
-      <Icon type="github" />
-    </a>
-    <a on:click={scrollMainTop} href="http://stackoverflow.com/users/3144603/johnnyfun" title="stackoverflow" target="_blank">
-      <Icon type="stack-overflow" />
-    </a>
-    <a on:click={scrollMainTop} href="https://www.linkedin.com/in/john-schottler-8b353235" title="linkedin" target="_blank">
-      <Icon type="linkedin-square" />
-    </a>
+    <HeaderLink href="/projects">Projects</HeaderLink>
+    <HeaderLink href="/articles">Articles</HeaderLink>
+    <HeaderLink href="/resume">Résumé</HeaderLink>
+    <HeaderLink href="/about-me">About me</HeaderLink>
+    {#if !thin}
+      <ExternalLinks />
+    {/if}
   </MenuItems>
 </nav>
 
 <script>
-  import Icon from 'components/Icon.svelte'
   import MenuItems from 'components/MenuItems.svelte'
+  import ExternalLinks from './ExternalLinks.svelte'
+  import HeaderLink from './HeaderLink.svelte'
+  import screenWidth from 'stores/screen-width'
 
-  function scrollMainTop(e) {
-    document.getElementsByTagName('main')[0].scrollTo(0,0)
-  }
+  $: thin = $screenWidth <= 430
 </script>
 
 <style>
@@ -39,37 +36,14 @@
     z-index: 1000;
   }
 
-  a {
-    color: var(--primary-text);
-    text-decoration: none;
-    display: inline-block;
-    padding: 1rem;
-    transition: border-bottom 0.3s;
-    border: 2px solid transparent;
-    text-decoration: none;
-    font-size: 1.5rem;
-  }
-
-  a:hover {
-    border-bottom: 2px solid var(--primary-text);
-  }
-
-  a.home {
-    padding: 1rem;
-    margin-left: 1.4rem;
-    font-size: 1.8rem;
-    transition: transform 0.3s;
-    font-weight: 100;
-  }
-
   @media only screen and (max-width: 650px) {
     nav {
       display: block;
       text-align: center;
     }
+  }
 
-    a {
-      font-size: 1.3rem;
-    }
+  @media only screen and (max-width: 430px) {
+    
   }
 </style>
