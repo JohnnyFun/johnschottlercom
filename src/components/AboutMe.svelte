@@ -1,7 +1,4 @@
 <div class="intro">
-  <div class="me-pic">
-    <img src="/images/me-sm.png" alt="me with fruit loops bird" />
-  </div>
   <div class="bio">
     <p>
       Hi, I've been a full-stack web developer since 2010. I also dabble in creating video games and machine learning models.
@@ -15,25 +12,11 @@
   </div>
 </div>
 
-<script>
-</script>
-
 <style>
  .intro {
     text-align: center;
     margin: 2rem;
     margin-bottom: 3rem;
-  }
-
-  .me-pic {
-    border-radius: 1rem;
-  }
-
-  .me-pic > img {
-    height: auto;
-    border-radius: .5rem;
-    width: 200px;
-    margin-bottom: 1rem;
   }
 
   .bio {

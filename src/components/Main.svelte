@@ -1,4 +1,5 @@
 <main>
+  <MePicture />
   <Router>
     <Route component={CodeProjects} />
     <Route path="/projects" component={CodeProjects} />
@@ -16,6 +17,7 @@
   import Articles from './Articles.svelte'
   import AboutMe from './AboutMe.svelte'
   import CodeProjects from './CodeProjects.svelte'
+  import MePicture from './MePicture.svelte';
 </script>
 
 <style>
