@@ -72,7 +72,7 @@
   import ResumeExperience from "./ResumeExperience.svelte"
 
   const technicalSkills = {
-    'Client-side': 'HTML, CSS, JavaScript',
+    'Client-side': 'HTML, CSS, JavaScript/TypeScript',
     'Client-side frameworks/libraries': 'Svelte, React, JQuery, …',
     'Server-side': 'C#, Node.js',
     'Server-side frameworks/libraries': '.NET Core, Dapper, SignalR, …',
