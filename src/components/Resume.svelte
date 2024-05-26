@@ -1,11 +1,17 @@
 <div class="resume-body">
   <h2>Professional Summary</h2>
-  <ul>
+  <p>
+    I've been a full-stack software engineer for 10 years.
+    I've worked in a variety of environments, from startups to established companies.
+    I particularly enjoy making database queries run faster--everyone wins if the app runs faster, everyone gets annoyed if it's slow.
+    I also particularly enjoy creating lots of fast-running and useful automated tests, so that deployments are less stressful because we know that we didn't break major functionality.
+  </p>
+  <!-- <ul>
     <li>Discussed project requirements with technical and non-technical people</li>
     <li>Built intuitive user interfaces for managing a variety of data</li>
     <li>Experienced working in multiple startup environments, where everyday poses new challenges and requires new skills to be learned</li>
     <li>Always kept the bigger picture in mind, developing not only the software, but also the purpose of the software</li>
-  </ul>
+  </ul> -->
   <h2>Primary Technical Skills</h2>
   <table>
     {#each Object.keys(technicalSkills) as category}
