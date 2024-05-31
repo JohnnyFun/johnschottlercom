@@ -59,7 +59,7 @@
   <ResumeExperience title="Web Developer" company="Genuine Genius Technologies" when="Apr 2011 - Mar 2012 · 1 yr"
     summary="Worked on various education-related applications for obtaining certifications. .NET MVC, Entity framework, SQL, telerik components." />
   <ResumeExperience title="Web Developer" company="Adestinn" when="Sept 2010 - Mar 2011, Mar 2012 - Jul 2014, Jul 2015 - Jul 2016 · ~3 yrs total" 
-    summary="This was the first company I worked at as a web developer. It was a startup. I helped them out throughout my first few years as a dev. It's still out there. I was one of the main devs on the project and built a lot of it's major functionality."	
+    summary="This was the first company I worked at as a web developer. It was a startup. I helped them out throughout my first few years as a dev. It's still out there. I was one of the main devs on the project and built a lot of its major functionality."	
     duties={[
     '.NET WebForms, a mixture of VB and C# in their codebase, MS SQL server database. mixture of jquery and ractive.js front-end.',
     'Built pages to search for hotels, see details, review pricing/payment, book',
