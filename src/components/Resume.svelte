@@ -6,7 +6,7 @@
     I particularly enjoy making database queries run faster--everyone wins if the app runs faster, everyone gets annoyed if it's slow.
     I also particularly enjoy creating lots of fast-running and useful automated tests, so that deployments are less stressful.
   </p>
-  <h2>Primary Technical Skills</h2>
+  <h2>Technical Skills</h2>
   <table>
     {#each Object.keys(technicalSkills) as category}
       <tr>
