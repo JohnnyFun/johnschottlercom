@@ -2,19 +2,34 @@
   <h4>{title}</h4>
   <h5>{company}</h5>
   <p class="when">{when}</p>
-  <ul>
-    {#each duties as duty}
-      <li>{duty}</li>
-    {/each}
-  </ul>
+  <p>
+    {summary}
+  </p>
+  {#if duties}
+    <a class="detail-toggler" href={null} on:click={() => showDetails = !showDetails}>
+      {showDetails ? 'hide details' : 'show details'}
+    </a>
+    {#if showDetails}
+      <ul in:slide out:slide>
+        {#each duties as duty}
+          <li>{duty}</li>
+        {/each}
+      </ul>
+    {/if}
+  {/if}
 </div>
 
 <script>
+  import { slide } from "svelte/transition"
+
   export let title
   export let company
   export let when
+  export let summary
   export let duties
   export let last = false
+
+  let showDetails = false
 </script>
 
 <style>
@@ -46,5 +61,9 @@
   }
   li {
     font-size: 1.5rem;
+  }
+  a.detail-toggler {
+    cursor: pointer;
+    font-size: smaller;
   }
 </style>
