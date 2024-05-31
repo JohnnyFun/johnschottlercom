@@ -1,3 +1,4 @@
+<!--if you update this, update the word/pdf version here: https://docs.google.com/document/d/1_tLqVLz9VV0PFaThCzss5xbWu3d7HExCrW_9xVNXSls/edit-->
 <div class="resume-body">
   <h2>Summary</h2>
   <p>
@@ -80,7 +81,7 @@
     'Automated testing frameworks': 'Cypress, XUnit',
     'Build process': 'Nuget/NPM, Webpack/Rollup, YAML CI/CD pipeline config, …',
     'Application hosting': 'Azure/AWS, IIS',
-    'Tools': 'Git, VScode, browser dev tools, SQL profiler, query execution plan, regex101.com, git history, Postman, Fiddler, …',
+    'Tools': 'Git, VScode, browser dev tools, …',
     'Hobby/Learning': 'horizontally-scalable SQL databases like CockRoachDB, PyTorch/Tensorflow, Bablyonjs (web GL/GPU game engine)',
   }
 </script>
