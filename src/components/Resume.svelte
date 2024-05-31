@@ -1,8 +1,8 @@
 <div class="resume-body">
   <h2>Summary</h2>
   <p>
-    I've been a full-stack software engineer since 2010.
-    I've worked in a variety of environments, from startups to established companies.
+    Full-stack software engineer since 2010.
+    Worked in a variety of environments, from startups to established companies.
     I particularly enjoy making database queries run faster--everyone wins if the app runs faster, everyone gets annoyed if it's slow.
     I also particularly enjoy creating lots of fast-running and useful automated tests, so that deployments are less stressful.
   </p>
