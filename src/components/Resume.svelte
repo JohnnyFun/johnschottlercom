@@ -1,5 +1,5 @@
-<!--if you update this, update the word/pdf version here: https://docs.google.com/document/d/1_tLqVLz9VV0PFaThCzss5xbWu3d7HExCrW_9xVNXSls/edit-->
-<!--and the detailed version too: https://docs.google.com/document/d/1Q7O3EL7OEyIjzPBbUFAUEEjDNS7CDkRtYhUeI6VFHGY/edit-->
+<!--if you update this, update the word/pdf version here: https://docs.google.com/document/d/1_tLqVLz9VV0PFaThCzss5xbWu3d7HExCrW_9xVNXSls/edit -->
+<!--and the detailed version too: https://docs.google.com/document/d/1Q7O3EL7OEyIjzPBbUFAUEEjDNS7CDkRtYhUeI6VFHGY/edit -->
 <div class="resume-body">
   <h2>Summary</h2>
   <p>
