@@ -7,7 +7,8 @@
   </p>
   {#if duties}
     <a class="detail-toggler" href={null} on:click={() => showDetails = !showDetails}>
-      {showDetails ? 'hide details' : 'show details'}
+      {showDetails ? 'Show less' : 'Show more'}
+      <Icon type="{showDetails ? 'caret-up' : 'caret-down'}" />
     </a>
     {#if showDetails}
       <ul in:slide out:slide>
@@ -21,6 +22,7 @@
 
 <script>
   import { slide } from "svelte/transition"
+  import Icon from "./Icon.svelte"
 
   export let title
   export let company
@@ -64,6 +66,6 @@
   }
   a.detail-toggler {
     cursor: pointer;
-    font-size: smaller;
+    font-size: 1.4rem;
   }
 </style>

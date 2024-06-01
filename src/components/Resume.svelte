@@ -5,8 +5,9 @@
   <p>
     Full-stack software engineer since 2010.
     Worked in a variety of environments, from startups to established companies.
-    I particularly enjoy making database queries run faster--everyone wins if the app runs faster, everyone gets annoyed if it's slow.
-    I also particularly enjoy creating lots of fast-running and useful automated tests, so that deployments are less stressful.
+    I particularly enjoy making database queries run faster. Everyone wins if the app runs faster, everyone gets annoyed if it's slow.
+    I also particularly enjoy creating fast-running and useful automated tests for all major features in an app.
+    That way, deployments are practically stress free most of the time.
   </p>
   <h2>Technical Skills</h2>
   <table>
