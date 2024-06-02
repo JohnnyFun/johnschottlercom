@@ -39,7 +39,7 @@
     'Handled many deployments to demo, staging, and prod',
   ]} />
   <ResumeExperience title="Software Engineer III" company="AssureSign" when="Jul 2016 - Mar 2018 · 1 yr 9 mos" 
-    summary="Added features and fixed bugs on a .Net/React/SQL esignature platform." duties={[
+    summary="Added features and fixed bugs on a C#/.Net/React/SQL esignature platform." duties={[
     'During my last 2 weeks, I sped up a slow query that made it possible to finally load their dashboard in god mode and see everything from a high level. CTO was pretty happy and surprised about that, and he wasn\'t the type of guy to get excited easily. I liked that I finished strong and didn\'t just sit with my thumb up my ass for my last 2 weeks.',
     'Used Reactjs to build modern web app features',
     'Used NancyFx and .Net to implement changes to their public and private API endpoints',
