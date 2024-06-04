@@ -80,7 +80,7 @@
     link="https://www.coursera.org/account/accomplishments/specialization/certificate/Y2VYBGNSM7WY"
   />
   <Certification
-    title="Machine Learning Specialization"
+    title="Coursera Machine Learning Specialization"
     issueDate="Jul 2023"
     description="Logistic Regression and Neural Networks"
     link="https://www.coursera.org/account/accomplishments/specialization/certificate/TUW7U6TA56U9"
