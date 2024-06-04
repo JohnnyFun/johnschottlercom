@@ -71,9 +71,24 @@
     'Worked with contract designer and UX people to implement features',
     'Deployed code, monitored/fixed bugs',
   ]} last />
+
+  <h2>Certifications</h2>
+  <Certification
+    title="Coursera Deep Learning Specialization"
+    issueDate="Nov 2023"
+    description="Convolutional Neural Networks (CNN) and Transformers"
+    link="https://www.coursera.org/account/accomplishments/specialization/certificate/Y2VYBGNSM7WY"
+  />
+  <Certification
+    title="Machine Learning Specialization"
+    issueDate="Jul 2023"
+    description="Logistic Regression and Neural Networks"
+    link="https://www.coursera.org/account/accomplishments/specialization/certificate/TUW7U6TA56U9"
+  />
 </div>
 
 <script>
+  import Certification from "./Certification.svelte"
   import ResumeExperience from "./ResumeExperience.svelte"
 
   const technicalSkills = {
