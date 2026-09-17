@@ -19,6 +19,6 @@ document.getElementById("serviceArea").textContent = business.serviceArea;
 document.getElementById("callButton").href = business.phoneHref;
 document.getElementById("phoneLink").href = business.phoneHref;
 
-const mailto = `mailto:${business.email}`;
+const mailto = `mailto:${business.email}?subject=Handyman%20service%20request&body=location%3A%0Adescription%3A%0A`;
 document.getElementById("emailButton").href = mailto;
 document.getElementById("emailLink").href = mailto;
