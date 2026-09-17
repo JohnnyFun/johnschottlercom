@@ -1,18 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
-  <title>John Schottler</title>
-  <!--
-    using font awesome for icons for now. TODO: import their npm instead to keep it lean
-    https://fontawesome.com/icons?d=gallery&m=free
-  -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <meta name="description"
+    content="Handyman services for Bow, Bellingham, Sedro Woolley — carpentry, electrical, plumbing, repairs, and general home maintenance.">
+  <title>John Schottler | Handyman</title>
 </head>
+
 <body>
-  <div id="app"></div>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" id="brandName"></a>
+      <a class="nav-contact" href="#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">HANDYMAN SERVICES</p>
+          <h1>Practical help for the things around your home.</h1>
+          <p class="hero-text">
+            Reliable, straightforward handyman work — from small repairs and carpentry
+            to basic plumbing and electrical projects
+          </p>
+          <div class="buttons">
+            <a class="button primary" id="callButton" href="#">Call or text</a>
+            <a class="button secondary" id="emailButton" href="#">Email me</a>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="/images/me.jpg" alt="Your Name" class="your-photo">
+        </div>
+      </div>
+    </section>
+
+    <section class="section callout">
+      <div class="container callout-inner">
+        <div>
+          <p class="eyebrow">ABOUT</p>
+          <!-- <p>I'm a local handyman who enjoys practical work and solving problems.
+            I focus on useful repairs and improvements without trying to
+            turn every small job into a major project.</p> -->
+          <p>Need a small repair done but don't want to call an expensive contractor?
+          </p>
+          <p>I offer reliable, reasonably priced handyman services for all those home projects and repairs that are too
+            small for most contractors. I focus on useful repairs and improvements without trying to
+            turn every small job into a major project.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services-section">
+      <div class="container">
+        <p class="eyebrow">SERVICES</p>
+        <div class="services">
+          <article class="service">
+            <div class="icon">01</div>
+            <h3>Carpentry</h3>
+            <p>Trim, doors, shelves, small framing and general wood and drywall repairs.</p>
+          </article>
+          <article class="service">
+            <div class="icon">02</div>
+            <h3>Plumbing</h3>
+            <p>Fixtures, leaks, drains, replacements and other basic plumbing work.</p>
+          </article>
+          <article class="service">
+            <div class="icon">03</div>
+            <h3>Electrical</h3>
+            <p>Basic electrical repairs, fixtures, switches and installations.</p>
+          </article>
+          <article class="service">
+            <div class="icon">04</div>
+            <h3>Home repairs</h3>
+            <p>General maintenance, installations, patching and the odd jobs that need doing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section callout">
+      <div class="container callout-inner">
+        <div>
+          <p class="eyebrow">PRICING</p>
+          <p>
+            $50 per hour</p>
+          <p>
+            2-hour minimum. Materials are additional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <p class="eyebrow">CONTACT</p>
+          <h2>Let's talk about your project.</h2>
+          <p>
+            Send me a quick description of the job, where you're located, and
+            any photos that might help. I'll get back to you to discuss the work.
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <a class="contact-row" id="phoneLink" href="#">
+            <span class="contact-label">Phone</span>
+            <strong id="phoneText">YOUR PHONE</strong>
+          </a>
+          <a class="contact-row" id="emailLink" href="#">
+            <span class="contact-label">Email</span>
+            <strong id="emailText">YOUR EMAIL</strong>
+          </a>
+          <div class="contact-row">
+            <span class="contact-label">Service area</span>
+            <strong id="serviceArea">YOUR SERVICE AREA</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span id="footerName">YOUR NAME</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
